@@ -3,7 +3,17 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig: {
+    apiKey: "AIzaSyDnVfhKj8D4MbnZv7gmF-fJY990NJgMlWQ",
+    authDomain: "bettertrello.firebaseapp.com",
+    databaseURL: "https://bettertrello.firebaseio.com",
+    projectId: "bettertrello",
+    storageBucket: "bettertrello.appspot.com",
+    messagingSenderId: "978620472338",
+    appId: "1:978620472338:web:ec121ff7f6983c76f5cccb",
+    measurementId: "G-XYZJQC37HX"
+  }
 };
 
 /*
