@@ -1,1 +1,8 @@
-<p>login-component works!</p>
+<div *ngIf="authService.getUser() | async as user; else showLogin">
+  <h1>Hello {{ user.displayName }}!</h1>
+  <button (click)="authService.logout()">Logout</button>
+</div>
+<ng-template #showLogin>
+  <p>Please login.</p>
+  <button (click)="authService.signInWithPopup()">Login with Google</button>
+</ng-template>
