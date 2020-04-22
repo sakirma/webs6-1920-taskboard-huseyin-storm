@@ -9,18 +9,36 @@ import {AngularFireModule} from "@angular/fire";
 import {environment} from "../environments/environment";
 import {AuthService} from "./services/auth.service";
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import {MatButtonModule} from "@angular/material/button";
+import { DragAndDropComponent } from './areas/drag-and-drop/drag-and-drop.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import {MatCardModule} from "@angular/material/card";
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatSidenavModule} from "@angular/material/sidenav";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponentComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    DragAndDropComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    MatButtonModule,
+    DragDropModule,
+    MatCardModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    ReactiveFormsModule,
+    MatSidenavModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

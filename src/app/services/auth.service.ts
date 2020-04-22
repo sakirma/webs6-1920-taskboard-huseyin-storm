@@ -13,7 +13,9 @@ export class AuthService {
   }
 
   public signInWithPopup() {
-    this.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    this.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
+      // TODO: redirect to projects page
+    );
   }
 
   public logout() {

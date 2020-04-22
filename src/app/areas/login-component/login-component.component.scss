@@ -1,0 +1,17 @@
+form {
+  width: 380px;
+  margin: 4em auto;
+  padding: 3em 2em 2em 2em;
+}
+
+::ng-deep .no-margin-card-header .mat-card-header-text {
+  margin: 0;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.full-width {
+  width: 100%;
+}
