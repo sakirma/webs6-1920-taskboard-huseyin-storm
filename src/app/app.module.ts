@@ -8,16 +8,18 @@ import {LoginComponentComponent} from './areas/login-component/login-component.c
 import {AngularFireModule} from "@angular/fire";
 import {environment} from "../environments/environment";
 import {AuthService} from "./services/auth.service";
-import { LoginPageComponent } from './pages/login-page/login-page.component';
+import {LoginPageComponent} from './pages/login-page/login-page.component';
 import {MatButtonModule} from "@angular/material/button";
-import { DragAndDropComponent } from './areas/drag-and-drop/drag-and-drop.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import {DragAndDropComponent} from './areas/drag-and-drop/drag-and-drop.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatCardModule} from "@angular/material/card";
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatRadioModule } from '@angular/material/radio';
-import { ReactiveFormsModule } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
+import {ReactiveFormsModule} from '@angular/forms';
 import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ProjectsPageComponent } from './pages/projects-page/projects-page.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     LoginComponentComponent,
     LoginPageComponent,
     DragAndDropComponent,
+    ProjectsPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
     MatRadioModule,
     ReactiveFormsModule,
     MatSidenavModule,
+    MatSnackBarModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

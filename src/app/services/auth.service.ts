@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/auth";
-import {User, auth} from "firebase";
+import {auth, User} from "firebase";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -12,17 +12,21 @@ export class AuthService {
 
   }
 
+  get getUser(): Observable<User | null> {
+    return this.auth.user;
+  }
+
   public signInWithPopup() {
     this.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
       // TODO: redirect to projects page
     );
   }
 
-  public logout() {
+  logout() {
     this.auth.signOut();
   }
 
-  public getUser() : Observable<User | null> {
-    return this.auth.user;
+  async signInWithEmailAndPassword(email: string, password: string) : Promise<any> {
+    return await this.auth.signInWithEmailAndPassword(email, password);
   }
 }
