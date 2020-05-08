@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {ProjectsService} from "../../services/projects.service";
+import {AuthService} from "../../services/auth.service";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-projects-page',
@@ -7,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private projectsService: ProjectsService, private authService: AuthService) {
+    authService.getUser.subscribe(user => {
+      console.log(user);
+    });
+  }
 
   ngOnInit(): void {
   }
