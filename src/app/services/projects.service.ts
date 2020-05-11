@@ -1,12 +1,22 @@
-import { Injectable } from '@angular/core';
-import {AngularFirestore} from "@angular/fire/firestore";
+import {Injectable} from '@angular/core';
+import {FirestoreService} from "./firestore.service";
+
+export interface Project {
+  id: string;
+  name: string;
+  userRoles: Array<any>;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectsService {
 
-  constructor(private db: AngularFirestore) {
+
+  constructor(private fireService: FirestoreService) {
+  }
+
+  public getProjects() {
 
   }
 }

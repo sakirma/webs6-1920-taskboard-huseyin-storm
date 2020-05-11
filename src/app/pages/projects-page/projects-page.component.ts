@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ProjectsService} from "../../services/projects.service";
+import {Project} from "../../services/projects.service";
 import {AuthService} from "../../services/auth.service";
-import {first} from "rxjs/operators";
+import {FirestoreService} from "../../services/firestore.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-projects-page',
@@ -9,11 +10,13 @@ import {first} from "rxjs/operators";
   styleUrls: ['./projects-page.component.scss']
 })
 export class ProjectsPageComponent implements OnInit {
+  public projects$ : Observable<Project[]>;
 
-  constructor(private projectsService: ProjectsService, private authService: AuthService) {
+  constructor(public db: FirestoreService, private authService: AuthService) {
     authService.getUser.subscribe(user => {
-      console.log(user);
     });
+
+    this.projects$ = this.db.colWithIds$('projects');
   }
 
   ngOnInit(): void {

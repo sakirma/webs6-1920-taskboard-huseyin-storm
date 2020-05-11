@@ -1,1 +1,3 @@
-<p>projects-page works!</p>
+<ul *ngFor="let project of projects$ | async">
+  <li>{{project.name}} ------ {{project.id}}</li>
+</ul>
