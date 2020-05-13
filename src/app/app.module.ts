@@ -20,6 +20,10 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ProjectsPageComponent } from './pages/projects-page/projects-page.component';
+import {MatListModule} from "@angular/material/list";
+import {FlexModule} from "@angular/flex-layout";
+import {MatTableModule} from "@angular/material/table";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -42,7 +46,11 @@ import { ProjectsPageComponent } from './pages/projects-page/projects-page.compo
     MatRadioModule,
     ReactiveFormsModule,
     MatSidenavModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatListModule,
+    FlexModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

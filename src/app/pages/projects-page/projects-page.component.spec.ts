@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectsPageComponent } from './projects-page.component';
+import {MatTableModule} from "@angular/material/table";
 
 describe('ProjectsPageComponent', () => {
   let component: ProjectsPageComponent;
@@ -8,7 +9,8 @@ describe('ProjectsPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProjectsPageComponent ]
+      declarations: [ ProjectsPageComponent ],
+      imports: [ MatTableModule ]
     })
     .compileComponents();
   }));
@@ -23,3 +25,4 @@ describe('ProjectsPageComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
