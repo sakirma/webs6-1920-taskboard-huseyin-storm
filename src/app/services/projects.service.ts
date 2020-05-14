@@ -4,6 +4,9 @@ import {FirestoreService} from "./firestore.service";
 export interface Project {
   id: string;
   name: string;
+  description: string;
+  owner: string;
+  status: string;
   userRoles: Array<any>;
 }
 

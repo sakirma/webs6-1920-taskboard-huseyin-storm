@@ -5,11 +5,6 @@ import {FirestoreService} from "../../services/firestore.service";
 import {Observable} from "rxjs";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
-
-export interface PeriodicElement {
-  description: string;
-}
-
 @Component({
   selector: 'app-projects-page',
   templateUrl: './projects-page.component.html',
@@ -24,9 +19,6 @@ export interface PeriodicElement {
 })
 export class ProjectsPageComponent implements OnInit {
   dataSource;
-  columnsToDisplay = ['name', 'status', 'owner'];
-  expandedElement: PeriodicElement | null;
-
 
   public projects$ : Observable<Project[]>;
 
