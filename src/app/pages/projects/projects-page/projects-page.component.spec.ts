@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProjectsPageComponent } from './projects-page.component';
-import {MatTableModule} from "@angular/material/table";
+import {MatTableModule} from '@angular/material/table';
 
 describe('ProjectsPageComponent', () => {
   let component: ProjectsPageComponent;

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Project} from "../../services/projects.service";
-import {AuthService} from "../../services/auth.service";
-import {FirestoreService} from "../../services/firestore.service";
-import {Observable} from "rxjs";
-import {animate, state, style, transition, trigger} from "@angular/animations";
+import {Project, ProjectsService} from '../../../services/projects.service';
+import {AuthService} from '../../../services/auth.service';
+import {FirestoreService} from '../../../services/firestore.service';
+import {Observable} from 'rxjs';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 
 export interface PeriodicElement {
@@ -23,22 +23,20 @@ export interface PeriodicElement {
   ],
 })
 export class ProjectsPageComponent implements OnInit {
-  dataSource;
-  columnsToDisplay = ['name', 'status', 'owner'];
-  expandedElement: PeriodicElement | null;
+  public columnsToDisplay = ['name', 'status', 'owner'];
+  public expandedElement: PeriodicElement | null;
 
+  public projects: Project[] = [];
 
-  public projects$ : Observable<Project[]>;
-
-  constructor(public db: FirestoreService, private authService: AuthService) {
-    authService.getUser.subscribe(user => {
+  constructor(public projectsService: ProjectsService, private authService: AuthService) {
+    this.projectsService.getProjects$().subscribe(projects => {
+      this.projects = projects;
     });
-    this.projects$ = this.db.colWithIds$('projects');
-    this.dataSource = this.projects$;
   }
 
   ngOnInit(): void {
   }
+
 
   openProject(id: string) {
     console.log(id);

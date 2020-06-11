@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from "@angular/fire/firestore";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
-import * as firebase from "firebase";
+import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} from '@angular/fire/firestore';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import * as firebase from 'firebase';
 
 type CollectionPredicate<T> = string | AngularFirestoreCollection<T>;
 type DocPredicate<T> = string | AngularFirestoreDocument<T>;
@@ -45,8 +45,8 @@ export class FirestoreService {
         const id = a.payload.doc.id;
 
         return {id, ...data };
-      })
-    }))
+      });
+    }));
   }
 
   /* Write Data */
@@ -61,6 +61,6 @@ export class FirestoreService {
       ...data,
       updatedAt: timestamp,
       createdAt: timestamp,
-    })
+    });
   }
 }

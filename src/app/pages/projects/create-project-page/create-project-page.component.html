@@ -1,0 +1,42 @@
+<div class="align-form-center">
+  <form (ngSubmit)="createProject()" [formGroup]="projectForm" novalidate>
+    <mat-card class="login-card">
+      <mat-card-header class="no-margin-card-header">
+        <mat-card-title>Create a project</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <label>
+                <input formControlName="name" matInput placeholder="Project name">
+              </label>
+              <mat-error>
+                The project name is <strong>required!</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <label>
+                <input type="text" formControlName="description" matInput
+                       placeholder="Description">
+              </label>
+              <mat-error>
+                the description is <strong>required!</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button [disabled]="!projectForm.valid" class="full-width" color="primary" mat-raised-button type="submit">Create Project</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
