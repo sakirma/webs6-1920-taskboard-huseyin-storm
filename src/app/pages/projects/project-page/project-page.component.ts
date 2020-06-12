@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
-import {User} from '../../../interfaces/User';
+import {forkJoin, Observable} from 'rxjs';
 import {Project, ProjectsService} from '../../../services/projects.service';
 import {ActivatedRoute} from '@angular/router';
 import {FirestoreService} from "../../../services/firestore.service";
+import {User} from "../../../interfaces/User";
+import {DocumentReference} from "@angular/fire/firestore";
+import {tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-project-page',
@@ -12,12 +14,10 @@ import {FirestoreService} from "../../../services/firestore.service";
 })
 export class ProjectPageComponent implements OnInit {
 
-  // TODO: User naar een subcollectie verplaatsen
-
-  public users$: Observable<User[]>;
+  public users$: Array<Observable<User>> = [];
   public project$: Observable<Project>;
 
-  public columnsToDisplay = ['name'];
+  public columnsToDisplay = ['members'];
 
   constructor(private projectsService: ProjectsService, private db: FirestoreService, private route: ActivatedRoute) {
 
@@ -26,16 +26,25 @@ export class ProjectPageComponent implements OnInit {
     route.params.subscribe(value => {
       const uid = value.uid;
 
-      this.db.doc$(`projects/${uid}`).subscribe(e => {
-        console.log(e);
-      })
-
-      this.project$ = this.projectsService.getProject$(uid);
-
-      this.users$ = this.projectsService.getUsersFromProject$(uid);
+      this.project$ = this.db.doc$(`projects/${uid}`);
     });
+  }
 
-
+  async getUserNames(userIds: DocumentReference[]) {
+    const userNames = new Set();
+    const reads = userIds.map(id => {
+      return this.db.doc<User>(id.path).get().pipe(
+        tap(doc => {
+          const { uid,  email} = doc.data() as User;
+          userNames.add({
+            id: uid,
+            email: email
+          })
+        })
+      );
+    });
+    await forkJoin(reads).toPromise();
+    return Array.from(userNames.values());
   }
 
   ngOnInit(): void {

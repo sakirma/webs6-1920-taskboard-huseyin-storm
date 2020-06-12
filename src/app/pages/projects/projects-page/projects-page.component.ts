@@ -36,11 +36,14 @@ export class ProjectsPageComponent implements OnInit {
   public projects$: Observable<Project[]>;
 
   constructor(public projectsService: ProjectsService, private router: Router, private db: FirestoreService) {
-    this.projects$ = this.projectsService.getProjects$();
-    this.projects$.subscribe(projects => {
-      this.archivedProjects = projects.filter(e => e.status === 'archived');
-      this.projects = projects.filter(e => e.status === 'active');
+    this.projectsService.getProject$().then(e => {
+      this.projects$ = e;
+      this.projects$.subscribe(projects => {
+        this.archivedProjects = projects.filter(e => e.status === 'archived');
+        this.projects = projects.filter(e => e.status === 'active');
+      });
     });
+
   }
 
   ngOnInit(): void {
@@ -53,6 +56,6 @@ export class ProjectsPageComponent implements OnInit {
 
   public async navigateTo(selectedProject: Project, route: string) {
     this.projectsService.selectedProject = selectedProject;
-    await this.router.navigate([route, {uid: selectedProject.uid}]);
+    await this.router.navigate([route, {uid: selectedProject.id}]);
   }
 }
