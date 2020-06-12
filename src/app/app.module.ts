@@ -4,7 +4,6 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LoginComponentComponent} from './areas/login-component/login-component.component';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AuthService} from './services/auth.service';
@@ -32,7 +31,6 @@ import { ProjectPageComponent } from './pages/projects/project-page/project-page
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponentComponent,
     LoginPageComponent,
     DragAndDropComponent,
     ProjectsPageComponent,
