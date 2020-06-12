@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-page',
@@ -12,7 +13,7 @@ export class LoginPageComponent implements OnInit {
   hidePassword = true;
   loginForm: FormGroup;
 
-  constructor(public authService: AuthService, private fb: FormBuilder, private snackBar: MatSnackBar) {
+  constructor(public authService: AuthService, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
     this.loginForm = this.fb.group({
       email: [null, Validators.required],
       password: [null, Validators.required],
@@ -24,8 +25,12 @@ export class LoginPageComponent implements OnInit {
 
   onLogin(): void {
     this.authService.signInWithEmailAndPassword(this.loginForm.get('email').value, this.loginForm.get('password').value)
+      .then(async e => {
+        await this.authService.storeUser(e.user);
+        this.router.navigate(['/projects']);
+      })
       .catch(error => {
-        this.snackBar.open(`${error.message}`, 'Dismiss', { duration: 3000 });
+        this.snackBar.open(`${error.message}`, 'Dismiss', {duration: 3000});
       });
   }
 
