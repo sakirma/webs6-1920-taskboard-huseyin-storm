@@ -32,7 +32,14 @@ export class CreateProjectPageComponent implements OnInit {
       owner: this.authService.getUser.uid
     };
 
-    await this.projectsService.createProject(projectInfo);
+    const projectUid = await this.projectsService.createProject(projectInfo);
+    const user = this.authService.getUser;
+
+    user.projects = user.projects ??  [];
+    user.projects.push(projectUid);
+
+    await this.authService.updateUser(user);
+
     await this.router.navigate(['projects']);
   }
 }

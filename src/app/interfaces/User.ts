@@ -1,4 +1,5 @@
-export interface IUser {
+export interface User {
+  uid: string;
   name: string;
   projects: Array<string>;
 }

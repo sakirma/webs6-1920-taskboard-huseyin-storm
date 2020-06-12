@@ -26,6 +26,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import { RegisterPageComponent } from './pages/authentication/register-page/register-page.component';
 import { CreateProjectPageComponent } from './pages/projects/create-project-page/create-project-page.component';
+import { EditProjectPageComponent } from './pages/projects/edit-project-page/edit-project-page.component';
+import { ProjectPageComponent } from './pages/projects/project-page/project-page.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { CreateProjectPageComponent } from './pages/projects/create-project-page
     ProjectsPageComponent,
     RegisterPageComponent,
     CreateProjectPageComponent,
+    EditProjectPageComponent,
+    ProjectPageComponent,
   ],
   imports: [
     BrowserModule,

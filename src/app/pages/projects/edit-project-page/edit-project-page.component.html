@@ -1,11 +1,10 @@
 <div class="align-form-center">
-  <form (ngSubmit)="createProject()" [formGroup]="projectForm" novalidate>
+  <form (ngSubmit)="updateProject()" [formGroup]="projectForm" novalidate>
     <mat-card class="login-card">
       <mat-card-header class="no-margin-card-header">
-        <mat-card-title>Create a project</mat-card-title>
+        <mat-card-title>Edit a project</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
@@ -36,9 +35,8 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button [disabled]="!projectForm.valid" class="full-width" color="primary" mat-raised-button type="submit">Create Project</button>
+        <button [disabled]="!projectForm.valid" class="full-width" color="primary" mat-raised-button type="submit">Update Project</button>
       </mat-card-actions>
-
     </mat-card>
   </form>
 </div>

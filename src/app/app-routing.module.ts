@@ -5,6 +5,8 @@ import {LoginPageComponent} from './pages/authentication/login-page/login-page.c
 import {ProjectsPageComponent} from './pages/projects/projects-page/projects-page.component';
 import {RegisterPageComponent} from './pages/authentication/register-page/register-page.component';
 import {CreateProjectPageComponent} from './pages/projects/create-project-page/create-project-page.component';
+import {EditProjectPageComponent} from './pages/projects/edit-project-page/edit-project-page.component';
+import {ProjectPageComponent} from './pages/projects/project-page/project-page.component';
 
 const redirectLoggedInToProjects = () => redirectLoggedInTo(['projects']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -33,7 +35,18 @@ const routes: Routes = [
     path: 'create-project',
     component: CreateProjectPageComponent,
     canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin}},
+  {
+    path: 'edit-project',
+    component: EditProjectPageComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin}},
+  {
+    path: 'project',
+    component: ProjectPageComponent,
+    canActivate: [AngularFireAuthGuard],
     data: {authGuardPipe: redirectUnauthorizedToLogin}}
+
 ];
 
 @NgModule({

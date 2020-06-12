@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
-import {Observable} from 'rxjs';
-import {IUser} from '../interfaces/IUser';
-import {User} from 'firebase';
+import {User} from '../interfaces/User';
 import {auth} from 'firebase';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {Project} from './projects.service';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +52,14 @@ export class AuthService {
     });
 
     return result;
+  }
+  public async updateUser(user: User): Promise<void>{
+    await this.fireStore.collection('users').doc(user.uid).update(user);
+  }
+
+  public getProjectsByUser(): Observable<Project[]>{
+    return this.fireStore.collection<Project>('projects', ref =>
+      ref.where('members', 'array-contains', this.getUser.uid)).valueChanges({idField: 'uid'});
   }
 
   async signInWithEmailAndPassword(email: string, password: string): Promise<any> {

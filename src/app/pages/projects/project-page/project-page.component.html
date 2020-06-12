@@ -1,0 +1,21 @@
+<div class="aligner" fxLayout="column" fxLayoutAlign="top" style="height: 100vh">
+  <div fxLayout="row" fxLayoutAlign="left">
+    <mat-card fxFlex="20%">
+      <mat-card-title>Users</mat-card-title>
+      <mat-card-content>
+        <table mat-table [dataSource]="users$ | async">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Users </th>
+            <td mat-cell *matCellDef="let user"> {{user.name}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplay">
+        </table>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="addUserToProject()">Add user</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
