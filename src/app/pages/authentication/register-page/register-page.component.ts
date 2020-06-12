@@ -25,7 +25,7 @@ export class RegisterPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public async onRegister() {
+  public onRegister() {
     if (!this.registerForm.valid) { return; }
 
     const userInfo = {
@@ -34,11 +34,14 @@ export class RegisterPageComponent implements OnInit {
     };
 
     this.authService.registerUser(userInfo)
+      .then(e => {
+        this.router.navigate(['/projects']);
+      })
       .catch(error => {
       this.snackBar.open(`${error.message}`, 'Dismiss', { duration: 3000 });
     });
 
-    await this.router.navigate(['/projects']);
+
   }
 
   private passwordValidator: ValidatorFn = (group: FormGroup): ValidationErrors | null => {
