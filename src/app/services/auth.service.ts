@@ -47,7 +47,8 @@ export class AuthService {
   public async registerUser(userInfo){
     const result = await this.fireAuth.createUserWithEmailAndPassword(userInfo.email, userInfo.password);
     await this.fireStore.collection('users').doc(result.user.uid).set({
-      name: result.user.displayName,
+      email: result.user.email,
+      name: '',
       projects: [],
     });
 
