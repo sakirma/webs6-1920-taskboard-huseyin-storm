@@ -4,6 +4,7 @@ import {AuthService} from './auth.service';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from '../interfaces/User';
 import {map} from 'rxjs/operators';
+import {FirestoreService} from "./firestore.service";
 
 export interface Project {
   uid: string;
@@ -23,7 +24,7 @@ export class ProjectsService {
   private readonly projects$: Observable<Project[]>;
   public selectedProject: Project;
 
-  constructor(private firestore: AngularFirestore, private authService: AuthService) {
+  constructor(private firestore: AngularFirestore, private db: FirestoreService, private authService: AuthService) {
     this.projects$ = this.firestore.collection<Project>('projects', ref =>
       ref.where('members', 'array-contains', this.authService.getUser.uid)).valueChanges({idField: 'uid'});
   }
@@ -38,7 +39,7 @@ export class ProjectsService {
       results[1].forEach(project => {
         results[0].map(user => {
           if (user.uid === project.owner) {
-            project.owner = user.name;
+            project.owner =  user.name;
           }
           return user;
         });
@@ -57,7 +58,7 @@ export class ProjectsService {
     await this.firestore.collection<Project>('projects').doc(projectUid).set({
       name: projectInfo.name,
       description: projectInfo.description,
-      owner: projectInfo.owner,
+      owner: this.firestore.doc(`users/${projectInfo.owner}`).ref,
       status: 'active',
       members: [projectInfo.owner],
       created_at: new Date()

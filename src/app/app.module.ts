@@ -27,6 +27,7 @@ import { RegisterPageComponent } from './pages/authentication/register-page/regi
 import { CreateProjectPageComponent } from './pages/projects/create-project-page/create-project-page.component';
 import { EditProjectPageComponent } from './pages/projects/edit-project-page/edit-project-page.component';
 import { ProjectPageComponent } from './pages/projects/project-page/project-page.component';
+import {DocPipe} from "./doc.pipe";
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ProjectPageComponent } from './pages/projects/project-page/project-page
     CreateProjectPageComponent,
     EditProjectPageComponent,
     ProjectPageComponent,
+    DocPipe,
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import {AuthService} from '../../../services/auth.service';
 import {Observable} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
+import {FirestoreService} from "../../../services/firestore.service";
 
 
 
@@ -32,12 +33,11 @@ export class ProjectsPageComponent implements OnInit {
   public projects: Project[] = [];
   public archivedProjects: Project[] = [];
 
-  private projects$: Observable<Project[]>;
+  public projects$: Observable<Project[]>;
 
-  constructor(public projectsService: ProjectsService, private router: Router) {
+  constructor(public projectsService: ProjectsService, private router: Router, private db: FirestoreService) {
     this.projects$ = this.projectsService.getProjects$();
     this.projects$.subscribe(projects => {
-
       this.archivedProjects = projects.filter(e => e.status === 'archived');
       this.projects = projects.filter(e => e.status === 'active');
     });
