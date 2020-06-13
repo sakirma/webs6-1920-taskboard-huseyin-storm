@@ -4,7 +4,7 @@ import {AuthService} from './auth.service';
 import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {User} from '../models/User';
 import {FirestoreService} from './firestore.service';
-import {Roles} from "../models/Roles";
+import {Role} from "../models/Role";
 import {Project} from "../models/Project";
 
 
@@ -62,7 +62,7 @@ export class ProjectsService {
       owner: ownerRef,
       status: 'active',
       members: [ownerRef],
-      roles: [{user: ownerRef, role: Roles.Owner}],
+      roles: [{user: ownerRef, role: Role.Owner}],
       created_at: new Date()
     });
 

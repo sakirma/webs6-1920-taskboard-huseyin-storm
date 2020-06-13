@@ -13,7 +13,6 @@ export class ProjectPageComponent implements OnInit {
 
   public project$: Observable<Project>;
 
-  public columnsToDisplay = ['members'];
 
   constructor(private projectsService: ProjectsService, private route: ActivatedRoute) {
     route.params.subscribe(async value => {
@@ -25,13 +24,5 @@ export class ProjectPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-  }
-
-  public addUserToProject(): void {
-    // let dialog =
-  }
-
-  log(role: any) {
-    console.log(role)
   }
 }

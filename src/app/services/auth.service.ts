@@ -3,9 +3,9 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {User} from '../models/User';
 import {auth} from 'firebase';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {Project} from './projects.service';
 import {Observable} from 'rxjs';
 import {Router} from "@angular/router";
+import {Project} from "../models/Project";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class AuthService {
   public signInWithPopup() {
     this.fireAuth.signInWithPopup(new auth.GoogleAuthProvider()).then(async e => {
         await this.storeUser(e.user);
-        this.router.navigate(['/projects']);
+        await this.router.navigate(['/projects']);
       }
     );
   }

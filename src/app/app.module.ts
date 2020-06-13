@@ -15,7 +15,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ProjectsPageComponent } from './pages/projects/projects-page/projects-page.component';
@@ -28,6 +28,10 @@ import { CreateProjectPageComponent } from './pages/projects/create-project-page
 import { EditProjectPageComponent } from './pages/projects/edit-project-page/edit-project-page.component';
 import { ProjectPageComponent } from './pages/projects/project-page/project-page.component';
 import {DocPipe} from "./doc.pipe";
+import {MatIconModule} from "@angular/material/icon";
+import { UserListComponent } from './areas/user-list/user-list.component';
+import { AddUserDialogComponent } from './areas/add-user-dialog/add-user-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -40,6 +44,8 @@ import {DocPipe} from "./doc.pipe";
     EditProjectPageComponent,
     ProjectPageComponent,
     DocPipe,
+    UserListComponent,
+    AddUserDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +64,10 @@ import {DocPipe} from "./doc.pipe";
     MatListModule,
     FlexModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatIconModule,
+    MatDialogModule,
+    FormsModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

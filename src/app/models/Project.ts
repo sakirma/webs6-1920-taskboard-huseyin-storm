@@ -1,4 +1,4 @@
-import {Roles} from "./Roles";
+import {Role} from "./Role";
 import {DocumentReference} from "@angular/fire/firestore";
 
 export interface Project {
@@ -6,7 +6,7 @@ export interface Project {
   name: string;
   description: string;
   members: Array<DocumentReference>;
-  roles: Array<{role: Roles, user: DocumentReference}>
+  roles: Array<{role: Role, user: DocumentReference}>
   owner: string;
   created_at: Date;
   status: string;
