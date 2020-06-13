@@ -12,7 +12,6 @@ import {Project} from '../../../models/Project';
 export class ProjectPageComponent implements OnInit {
 
   public project$: Observable<Project>;
-
   public columnsToDisplay = ['members'];
 
   constructor(private projectsService: ProjectsService, private route: ActivatedRoute) {

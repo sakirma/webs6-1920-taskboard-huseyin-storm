@@ -4,8 +4,8 @@ import {AuthService} from './auth.service';
 import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {User} from '../models/User';
 import {FirestoreService} from './firestore.service';
-import {Roles} from "../models/Roles";
-import {Project} from "../models/Project";
+import {Roles} from '../models/Roles';
+import {Project} from '../models/Project';
 
 
 
