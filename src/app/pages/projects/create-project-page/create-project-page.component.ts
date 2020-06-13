@@ -14,10 +14,10 @@ export class CreateProjectPageComponent implements OnInit {
 
   public projectForm: FormGroup;
 
-  constructor(private projectsService: ProjectsService, private db: FirestoreService, private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private projectsService: ProjectsService, private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.projectForm = this.fb.group({
       name: [null, Validators.required],
-      description: [null, Validators.required],
+      description: [null],
     });
   }
 

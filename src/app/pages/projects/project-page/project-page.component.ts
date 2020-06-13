@@ -19,13 +19,12 @@ export class ProjectPageComponent implements OnInit {
 
   public columnsToDisplay = ['members'];
 
-  constructor(private projectsService: ProjectsService, private db: FirestoreService, private route: ActivatedRoute) {
-    route.params.subscribe(value => {
+  constructor(private projectsService: ProjectsService, private route: ActivatedRoute) {
+    route.params.subscribe(async value => {
       const uid = value.uid;
 
-      this.project$ = this.db.doc$(`projects/${uid}`);
+      this.project$ = await projectsService.getProject$(uid);
     });
-
   }
 
   ngOnInit(): void {

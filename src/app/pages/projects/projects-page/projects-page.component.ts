@@ -35,8 +35,8 @@ export class ProjectsPageComponent implements OnInit {
 
   public projects$: Observable<Project[]>;
 
-  constructor(public projectsService: ProjectsService, private router: Router, private db: FirestoreService) {
-    this.projectsService.getProject$().then(e => {
+  constructor(public projectsService: ProjectsService, private router: Router) {
+    this.projectsService.getProjects$().then(e => {
       this.projects$ = e;
       this.projects$.subscribe(projects => {
         this.archivedProjects = projects.filter(e => e.status === 'archived');

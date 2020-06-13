@@ -24,13 +24,14 @@ export class ProjectsService {
   public selectedProject: Project;
 
   constructor(private firestore: AngularFirestore, private db: FirestoreService, private authService: AuthService) {
-    // this.db.doc<DocumentReference>(`users/${this.authService.getUser.uid}`).get().subscribe(async e => {
 
-
-    // });
   }
 
-  public async getProject$(): Promise<Observable<Project[]>> {
+  public async getProject$(uid: String): Promise<Observable<Project>> {
+    return this.db.doc$(`projects/${uid}`);
+  }
+
+  public async getProjects$(): Promise<Observable<Project[]>> {
     const userRef = await this.db.doc<DocumentReference>(`users/${this.authService.getUser.uid}`).ref;
     this.projects$ = await this.db.colWithIds$('projects', ref => ref.where('members', 'array-contains', userRef));
     return this.projects$;

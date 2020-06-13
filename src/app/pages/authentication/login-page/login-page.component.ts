@@ -27,7 +27,7 @@ export class LoginPageComponent implements OnInit {
     this.authService.signInWithEmailAndPassword(this.loginForm.get('email').value, this.loginForm.get('password').value)
       .then(async e => {
         await this.authService.storeUser(e.user);
-        this.router.navigate(['/projects']);
+        await this.router.navigate(['/projects']);
       })
       .catch(error => {
         this.snackBar.open(`${error.message}`, 'Dismiss', {duration: 3000});

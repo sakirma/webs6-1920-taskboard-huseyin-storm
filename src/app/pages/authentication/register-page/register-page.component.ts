@@ -34,14 +34,12 @@ export class RegisterPageComponent implements OnInit {
     };
 
     this.authService.registerUser(userInfo)
-      .then(e => {
-        this.router.navigate(['/projects']);
+      .then(async e => {
+        await this.router.navigate(['/projects']);
       })
       .catch(error => {
       this.snackBar.open(`${error.message}`, 'Dismiss', { duration: 3000 });
     });
-
-
   }
 
   private passwordValidator: ValidatorFn = (group: FormGroup): ValidationErrors | null => {
