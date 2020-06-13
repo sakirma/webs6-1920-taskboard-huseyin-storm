@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
-import {User} from '../../../interfaces/User';
+import {forkJoin, Observable} from 'rxjs';
 import {Project, ProjectsService} from '../../../services/projects.service';
 import {ActivatedRoute} from '@angular/router';
+import {FirestoreService} from '../../../services/firestore.service';
+import {User} from '../../../interfaces/User';
+import {DocumentReference} from '@angular/fire/firestore';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-project-page',
@@ -11,21 +14,18 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ProjectPageComponent implements OnInit {
 
-  // TODO: User naar een subcollectie verplaatsen
-
-  public users$: Observable<User[]>;
+  public users$: Array<Observable<User>> = [];
   public project$: Observable<Project>;
 
-  public columnsToDisplay = ['name'];
+  public columnsToDisplay = ['members'];
 
-  constructor(private projectsService: ProjectsService, private route: ActivatedRoute) {
-
+  constructor(private projectsService: ProjectsService, private db: FirestoreService, private route: ActivatedRoute) {
     route.params.subscribe(value => {
       const uid = value.uid;
 
-      this.project$ = this.projectsService.getProject$(uid);
-      this.users$ = this.projectsService.getUsersFromProject$(uid);
+      this.project$ = this.db.doc$(`projects/${uid}`);
     });
+
   }
 
   ngOnInit(): void {
@@ -33,6 +33,6 @@ export class ProjectPageComponent implements OnInit {
   }
 
   public addUserToProject(): void {
-    //let dialog =
+    // let dialog =
   }
 }

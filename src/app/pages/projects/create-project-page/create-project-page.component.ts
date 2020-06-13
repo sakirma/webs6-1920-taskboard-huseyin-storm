@@ -3,6 +3,7 @@ import {ProjectsService} from '../../../services/projects.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
+import {FirestoreService} from "../../../services/firestore.service";
 
 @Component({
   selector: 'app-create-project-page',
@@ -13,7 +14,7 @@ export class CreateProjectPageComponent implements OnInit {
 
   public projectForm: FormGroup;
 
-  constructor(private projectsService: ProjectsService, private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private projectsService: ProjectsService, private db: FirestoreService, private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.projectForm = this.fb.group({
       name: [null, Validators.required],
       description: [null, Validators.required],

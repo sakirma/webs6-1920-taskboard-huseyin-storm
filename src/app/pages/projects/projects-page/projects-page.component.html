@@ -11,7 +11,14 @@
                class="mat-elevation-z8">
             <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
               <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-              <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+              <td mat-cell *matCellDef="let element">
+                <div *ngIf="column === 'owner' && (element[column] | doc | async) as user; else other">
+                  {{user.email}}
+                </div>
+                <ng-template #other>
+                  {{element[column]}}
+                </ng-template>
+              </td>
             </ng-container>
 
           <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -56,7 +63,14 @@
 
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
             <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-            <td mat-cell *matCellDef="let element"> {{element[column]}}</td>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="column === 'owner' && (element[column] | doc | async) as user; else other">
+                {{user.email}}
+              </div>
+              <ng-template #other>
+                {{element[column]}}
+              </ng-template>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="unarchive">

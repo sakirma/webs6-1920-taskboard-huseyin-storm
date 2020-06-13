@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
 import {combineLatest, Observable} from 'rxjs';
 import {AuthService} from './auth.service';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {User} from '../interfaces/User';
 import {map} from 'rxjs/operators';
+import {FirestoreService} from "./firestore.service";
 
 export interface Project {
-  uid: string;
+  id: string;
   name: string;
   description: string;
-  members: string[];
+  members: Array<DocumentReference>;
   owner: string;
   created_at: Date;
   status: string;
@@ -19,33 +20,38 @@ export interface Project {
   providedIn: 'root'
 })
 export class ProjectsService {
-
-  private readonly projects$: Observable<Project[]>;
+  public projects$: Observable<Project[]>;
   public selectedProject: Project;
 
-  constructor(private firestore: AngularFirestore, private authService: AuthService) {
-    this.projects$ = this.firestore.collection<Project>('projects', ref =>
-      ref.where('members', 'array-contains', this.authService.getUser.uid)).valueChanges({idField: 'uid'});
+  constructor(private firestore: AngularFirestore, private db: FirestoreService, private authService: AuthService) {
+    // this.db.doc<DocumentReference>(`users/${this.authService.getUser.uid}`).get().subscribe(async e => {
+
+
+    // });
   }
 
-  public getProject$(uid: string): Observable<Project>{
-    return this.firestore.collection('project').doc<Project>(uid).valueChanges();
+  public async getProject$(): Promise<Observable<Project[]>> {
+    let userRef = await this.db.doc<DocumentReference>(`users/${this.authService.getUser.uid}`).ref;
+    this.projects$ = await this.db.colWithIds$('projects', ref => ref.where('members', 'array-contains', userRef));
+    return this.projects$;
   }
 
-  public getProjects$(): Observable<Project[]> {
-    const users$ = this.firestore.collection<User>('users').valueChanges({idField: 'uid'});
-    return combineLatest([users$, this.projects$]).pipe(map((results) => {
-      results[1].forEach(project => {
-        results[0].map(user => {
-          if (user.uid === project.owner) {
-            project.owner = user.name;
-          }
-          return user;
-        });
-      });
-      return results[1];
-    }));
-  }
+  // public getProjects$(): Observable<Project[]> {
+  //   const users$ = this.firestore.collection<User>('users').valueChanges({idField: 'uid'});
+  //   return combineLatest([users$, this.projects$]).pipe(map((results) => {
+  //     results[1].forEach(project => {
+  //       results[0].map(user => {
+  //         console.log(user.uid)
+  //         console.log(project.owner)
+  //         if (`users/${user.uid}` === project.owner) {
+  //           project.owner =  user.name;
+  //         }
+  //         return user;
+  //       });
+  //     });
+  //     return results[1];
+  //   }));
+  // }
 
   public getUsersFromProject$(uid: string): Observable<User[]> {
     return this.firestore.collection<User>('users', ref =>
@@ -54,12 +60,13 @@ export class ProjectsService {
 
   public async createProject(projectInfo): Promise<string> {
     const projectUid = this.firestore.createId();
+    let ownerRef = await this.db.doc(`users/${projectInfo.owner}`).ref;
     await this.firestore.collection<Project>('projects').doc(projectUid).set({
       name: projectInfo.name,
       description: projectInfo.description,
-      owner: projectInfo.owner,
+      owner: ownerRef,
       status: 'active',
-      members: [projectInfo.owner],
+      members: [ownerRef],
       created_at: new Date()
     });
 
@@ -67,7 +74,7 @@ export class ProjectsService {
   }
 
   public async updateProject(project: Project): Promise<void>{
-    await this.firestore.collection('projects').doc(project.uid).update(project);
+    await this.firestore.collection('projects').doc(project.id).update(project);
   }
 
 }

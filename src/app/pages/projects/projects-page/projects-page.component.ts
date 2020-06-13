@@ -4,6 +4,7 @@ import {AuthService} from '../../../services/auth.service';
 import {Observable} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
+import {FirestoreService} from "../../../services/firestore.service";
 
 
 
@@ -32,15 +33,17 @@ export class ProjectsPageComponent implements OnInit {
   public projects: Project[] = [];
   public archivedProjects: Project[] = [];
 
-  private projects$: Observable<Project[]>;
+  public projects$: Observable<Project[]>;
 
-  constructor(public projectsService: ProjectsService, private router: Router) {
-    this.projects$ = this.projectsService.getProjects$();
-    this.projects$.subscribe(projects => {
-
-      this.archivedProjects = projects.filter(e => e.status === 'archived');
-      this.projects = projects.filter(e => e.status === 'active');
+  constructor(public projectsService: ProjectsService, private router: Router, private db: FirestoreService) {
+    this.projectsService.getProject$().then(e => {
+      this.projects$ = e;
+      this.projects$.subscribe(projects => {
+        this.archivedProjects = projects.filter(e => e.status === 'archived');
+        this.projects = projects.filter(e => e.status === 'active');
+      });
     });
+
   }
 
   ngOnInit(): void {
@@ -53,6 +56,6 @@ export class ProjectsPageComponent implements OnInit {
 
   public async navigateTo(selectedProject: Project, route: string) {
     this.projectsService.selectedProject = selectedProject;
-    await this.router.navigate([route, {uid: selectedProject.uid}]);
+    await this.router.navigate([route, {uid: selectedProject.id}]);
   }
 }
