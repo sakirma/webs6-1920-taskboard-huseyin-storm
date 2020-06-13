@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Project, ProjectsService} from '../../../services/projects.service';
+import {Project, ProjectService} from '../../../services/project.service';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 
@@ -14,7 +14,7 @@ export class EditProjectPageComponent implements OnInit {
   public projectForm: FormGroup;
   public editedProject: Project;
 
-  constructor(private projectsService: ProjectsService, private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private projectsService: ProjectService, private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.projectForm = this.fb.group({
       name: [null, Validators.required],
       description: [null],

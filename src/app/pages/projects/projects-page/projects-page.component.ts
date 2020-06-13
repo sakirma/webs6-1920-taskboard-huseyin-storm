@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ProjectsService} from '../../../services/projects.service';
+import {ProjectService} from '../../../services/project.service';
 import {Observable} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
@@ -33,7 +33,7 @@ export class ProjectsPageComponent implements OnInit {
 
   public projects$: Observable<Project[]>;
 
-  constructor(public projectsService: ProjectsService, private router: Router) {
+  constructor(public projectsService: ProjectService, private router: Router) {
     this.projectsService.getProjects$().then(e => {
       this.projects$ = e;
       this.projects$.subscribe(projects => {

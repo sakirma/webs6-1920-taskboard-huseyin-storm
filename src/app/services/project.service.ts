@@ -12,7 +12,7 @@ import {Project} from "../models/Project";
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectsService {
+export class ProjectService {
   public projects$: Observable<Project[]>;
   public selectedProject: Project;
 

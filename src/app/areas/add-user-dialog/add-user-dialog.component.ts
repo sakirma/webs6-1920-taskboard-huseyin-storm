@@ -1,5 +1,6 @@
 import {Component, Inject} from "@angular/core";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {UserService} from "../../services/user.service";
 
 export interface DialogData {
   email: string;
@@ -14,10 +15,18 @@ export class AddUserDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AddUserDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private userService: UserService) {
+  }
 
-  onDoneClick(): void {
-
+  public onCancelClick() {
     this.dialogRef.close();
+  }
+
+  public async onDoneClick() {
+    if (await this.userService.userExists(this.data.email)) {
+      this.dialogRef.close();
+    } else {
+    }
   }
 }
