@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {forkJoin, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Project, ProjectsService} from '../../../services/projects.service';
 import {ActivatedRoute} from '@angular/router';
-import {FirestoreService} from '../../../services/firestore.service';
 import {User} from '../../../interfaces/User';
-import {DocumentReference} from '@angular/fire/firestore';
-import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-project-page',

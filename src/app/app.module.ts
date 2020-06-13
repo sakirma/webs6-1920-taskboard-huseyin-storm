@@ -27,7 +27,9 @@ import { RegisterPageComponent } from './pages/authentication/register-page/regi
 import { CreateProjectPageComponent } from './pages/projects/create-project-page/create-project-page.component';
 import { EditProjectPageComponent } from './pages/projects/edit-project-page/edit-project-page.component';
 import { ProjectPageComponent } from './pages/projects/project-page/project-page.component';
-import {DocPipe} from "./doc.pipe";
+import {DocPipe} from './doc.pipe';
+import { SprintsOverviewComponent } from './areas/sprints-overview/sprints-overview.component';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import {DocPipe} from "./doc.pipe";
     EditProjectPageComponent,
     ProjectPageComponent,
     DocPipe,
+    SprintsOverviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ import {DocPipe} from "./doc.pipe";
     MatListModule,
     FlexModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    OverlayModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
