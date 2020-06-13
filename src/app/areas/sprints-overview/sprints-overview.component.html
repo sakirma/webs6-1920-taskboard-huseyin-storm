@@ -4,23 +4,34 @@
     <mat-card>
       <mat-card-title>Backlog</mat-card-title>
       <mat-card-content>
-        <div cdkDropList #backLog="cdkDropList" [cdkDropListData]="backlog$ | async"
-             [cdkDropListConnectedTo]="" class="list" (cdkDropListDropped)="onStoriesDrop($event)">
-          <div class="list-item" *ngFor="let story of backlog$ | async" cdkDrag>{{story}}</div>
+        <div cdkDropList id="backLog" [cdkDropListData]="backlog"
+             [cdkDropListConnectedTo]="allDropLists" class="example-list" (cdkDropListDropped)="onStoriesDrop($event)">
+          <div class="example-box" *ngFor="let story of backlog" cdkDrag>
+            <div>
+              {{story.name}}
+            </div>
+          </div>
         </div>
 
       </mat-card-content>
     </mat-card>
-    <mat-card *ngFor="let sprint of sprints$ | async">
+    <mat-card *ngFor="let sprint of sprints">
       <mat-card-title>{{sprint.name}}</mat-card-title>
       <mat-card-content>
-        {{sprint.start_date+ " - " + sprint.end_date}}
-        <div cdkDropList #sprintList="cdkDropList" [cdkDropListData]="sprintList$ | async"
-             [cdkDropListConnectedTo]="" class="list" (cdkDropListDropped)="onStoriesDrop($event)">
-          <div class="list-item" *ngFor="let story of sprintList$ | async" cdkDrag>{{story}}</div>
-        </div>
+        <p>Start date: {{sprint.start_date.toDate() | date: 'dd/MM/yyyy'}}</p>
+        <p>End date: {{sprint.end_date.toDate() | date: 'dd/MM/yyyy'}}</p>
+        <p>Days left: {{ (sprint.end_date.toMillis() - sprint.start_date.toMillis())  / (1000 * 3600 * 24) }}</p>
       </mat-card-content>
+      <div cdkDropList id="{{sprint.uid}}" [cdkDropListData]="sprint.stories_ref"
+           [cdkDropListConnectedTo]="allDropLists" class="example-list" (cdkDropListDropped)="onStoriesDrop($event)">
+        <div class="example-box" *ngFor="let story of sprint.stories_ref" cdkDrag>
+          <div>
+            {{story.name}}
+          </div>
+        </div>
+      </div>
     </mat-card>
+
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="onCreateSprint()" >Create sprint</button>
     </mat-card-actions>

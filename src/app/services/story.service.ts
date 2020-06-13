@@ -4,6 +4,9 @@ import {FirestoreService} from './firestore.service';
 import {AuthService} from './auth.service';
 import {Observable} from 'rxjs';
 import {Story} from '../models/Story';
+import DocumentReference = firebase.firestore.DocumentReference;
+import * as firebase from 'firebase';
+import {error} from '@angular/compiler-cli/src/transformers/util';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +17,19 @@ export class StoryService {
   }
 
   public getStories$(projectID: string): Observable<Story[]>{
-    return this.firestore.collection('projects').doc(projectID).collection<Story>('stories').valueChanges({idField: 'uid'});
+    // return this.firestore.collection('projects').doc(projectID).collection<Story>('stories').snapshotChanges(sn);
+    return this.db.colWithIds$(`projects/${projectID}/stories`);
+  }
+
+  public async getStoryDocs(storyIDs: DocumentReference[]): Promise<Story[]>{
+    const stories: Story[] = [];
+    for (const storyID of storyIDs){
+      this.db.doc$<Story>(storyID.path).subscribe(story => {
+        story.id = storyID.id;
+        stories.push(story);
+      });
+    }
+    return stories;
   }
 
   public getBackLogStories$(projectID: string): Observable<Story[]>{
@@ -27,7 +42,7 @@ export class StoryService {
   }
 
   public updateSprint(projectID: string, story: Story){
-    return this.firestore.collection('projects').doc(projectID).collection('stories').doc(story.uid).update(story);
+    return this.firestore.collection('projects').doc(projectID).collection('stories').doc(story.id).update(story);
   }
 }
 
