@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ProjectService} from '../../../services/project.service';
+import { ProjectService} from '../../../services/project.service';
+import { Project } from '../../../models/Project';
 import {Observable} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
-import {Project} from "../../../models/Project";
 
 
 export interface PeriodicElement {

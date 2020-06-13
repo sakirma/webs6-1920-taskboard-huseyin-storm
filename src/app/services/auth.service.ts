@@ -3,9 +3,10 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {User} from '../models/User';
 import {auth} from 'firebase';
 import {AngularFirestore} from '@angular/fire/firestore';
+import { Project } from '../models/Project';
 import {Observable} from 'rxjs';
-import {Router} from "@angular/router";
-import {Project} from "../models/Project";
+import {Router} from '@angular/router';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'

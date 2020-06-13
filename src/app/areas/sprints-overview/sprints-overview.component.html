@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-title>Project overview</mat-card-title>
+  <mat-card-content>
+    <mat-card>
+      <mat-card-title>Backlog</mat-card-title>
+      <mat-card-content>
+        <div cdkDropList #backLog="cdkDropList" [cdkDropListData]="backlog$ | async"
+             [cdkDropListConnectedTo]="sprintList" class="list" (cdkDropListDropped)="onStoriesDrop($event)">
+          <div class="list-item" *ngFor="let story of backlog$ | async" cdkDrag>{{story}}</div>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+    <mat-card *ngFor="let sprint of sprints$ | async">
+      <mat-card-title>{{sprint.name}}</mat-card-title>
+      <mat-card-content>
+        {{sprint.start_date+ " - " + sprint.end_date}}
+        <div cdkDropList #sprintList="cdkDropList" [cdkDropListData]="sprintList$ | async"
+             [cdkDropListConnectedTo]="" class="list" (cdkDropListDropped)="onStoriesDrop($event)">
+          <div class="list-item" *ngFor="let story of sprintList$ | async" cdkDrag>{{story}}</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="onCreateSprint()" >Create sprint</button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>

@@ -32,6 +32,9 @@ import {MatIconModule} from "@angular/material/icon";
 import { UserListComponent } from './areas/user-list/user-list.component';
 import { AddUserDialogComponent } from './areas/add-user-dialog/add-user-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { SprintsOverviewComponent } from './areas/sprints-overview/sprints-overview.component';
+import {OverlayModule} from '@angular/cdk/overlay';
+import { CreateSprintComponent } from './pages/sprints/create-sprint/create-sprint.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     DocPipe,
     UserListComponent,
     AddUserDialogComponent,
+    SprintsOverviewComponent,
+    CreateSprintComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,7 +72,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatSortModule,
     MatIconModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    OverlayModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

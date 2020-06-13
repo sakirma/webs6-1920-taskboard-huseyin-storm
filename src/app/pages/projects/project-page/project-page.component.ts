@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from 'rxjs';
 import {ProjectService} from '../../../services/project.service';
 import {ActivatedRoute} from '@angular/router';
-import {Project} from "../../../models/Project";
+import {Project} from '../../../models/Project';
 
 @Component({
   selector: 'app-project-page',
