@@ -1,20 +1,13 @@
 import {Injectable} from '@angular/core';
-import {combineLatest, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {AuthService} from './auth.service';
 import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
-import {User} from '../interfaces/User';
-import {map} from 'rxjs/operators';
+import {User} from '../models/User';
 import {FirestoreService} from './firestore.service';
+import {Roles} from "../models/Roles";
+import {Project} from "../models/Project";
 
-export interface Project {
-  id: string;
-  name: string;
-  description: string;
-  members: Array<DocumentReference>;
-  owner: string;
-  created_at: Date;
-  status: string;
-}
+
 
 @Injectable({
   providedIn: 'root'
@@ -69,8 +62,10 @@ export class ProjectsService {
       owner: ownerRef,
       status: 'active',
       members: [ownerRef],
+      roles: [{user: ownerRef, role: Roles.Owner}],
       created_at: new Date()
     });
+
 
     return projectUid;
   }

@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {forkJoin, Observable} from 'rxjs';
-import {Project, ProjectsService} from '../../../services/projects.service';
+import {Observable} from 'rxjs';
+import {ProjectsService} from '../../../services/projects.service';
 import {ActivatedRoute} from '@angular/router';
-import {FirestoreService} from '../../../services/firestore.service';
-import {User} from '../../../interfaces/User';
-import {DocumentReference} from '@angular/fire/firestore';
-import {tap} from 'rxjs/operators';
+import {Project} from "../../../models/Project";
 
 @Component({
   selector: 'app-project-page',
@@ -14,7 +11,6 @@ import {tap} from 'rxjs/operators';
 })
 export class ProjectPageComponent implements OnInit {
 
-  public users$: Array<Observable<User>> = [];
   public project$: Observable<Project>;
 
   public columnsToDisplay = ['members'];
@@ -33,5 +29,9 @@ export class ProjectPageComponent implements OnInit {
 
   public addUserToProject(): void {
     // let dialog =
+  }
+
+  log(role: any) {
+    console.log(role)
   }
 }
