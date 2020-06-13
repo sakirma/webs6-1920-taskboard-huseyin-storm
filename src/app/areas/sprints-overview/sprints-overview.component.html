@@ -34,6 +34,9 @@
 
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="onCreateSprint()" >Create sprint</button>
+      <div *ngIf="(project$ | async) as project" style="display: inline; margin-left: 15px">
+        <button mat-raised-button color="primary" *ngIf="userIsOwner(project)" (click)="onCreateUserStory()" >Create User Story</button>
+      </div>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>
