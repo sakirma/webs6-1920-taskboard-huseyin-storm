@@ -4,7 +4,7 @@ import {AuthService} from './auth.service';
 import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {User} from '../interfaces/User';
 import {map} from 'rxjs/operators';
-import {FirestoreService} from "./firestore.service";
+import {FirestoreService} from './firestore.service';
 
 export interface Project {
   id: string;
@@ -31,7 +31,7 @@ export class ProjectsService {
   }
 
   public async getProject$(): Promise<Observable<Project[]>> {
-    let userRef = await this.db.doc<DocumentReference>(`users/${this.authService.getUser.uid}`).ref;
+    const userRef = await this.db.doc<DocumentReference>(`users/${this.authService.getUser.uid}`).ref;
     this.projects$ = await this.db.colWithIds$('projects', ref => ref.where('members', 'array-contains', userRef));
     return this.projects$;
   }
@@ -60,7 +60,8 @@ export class ProjectsService {
 
   public async createProject(projectInfo): Promise<string> {
     const projectUid = this.firestore.createId();
-    let ownerRef = await this.db.doc(`users/${projectInfo.owner}`).ref;
+    const ownerRef = await this.db.doc(`users/${projectInfo.owner}`).ref;
+
     await this.firestore.collection<Project>('projects').doc(projectUid).set({
       name: projectInfo.name,
       description: projectInfo.description,
