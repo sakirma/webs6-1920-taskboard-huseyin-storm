@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable} from 'rxjs';
-import {Project, ProjectsService} from '../../../services/projects.service';
+import {ProjectsService} from '../../../services/projects.service';
 import {ActivatedRoute} from '@angular/router';
-import {User} from '../../../interfaces/User';
+import {Project} from '../../../models/Project';
 
 @Component({
   selector: 'app-project-page',
@@ -11,7 +11,6 @@ import {User} from '../../../interfaces/User';
 })
 export class ProjectPageComponent implements OnInit {
 
-  public users$: Array<Observable<User>> = [];
   public project$: Observable<Project>;
 
   public columnsToDisplay = ['members'];
@@ -30,5 +29,9 @@ export class ProjectPageComponent implements OnInit {
 
   public addUserToProject(): void {
     // let dialog =
+  }
+
+  log(role: any) {
+    console.log(role);
   }
 }
