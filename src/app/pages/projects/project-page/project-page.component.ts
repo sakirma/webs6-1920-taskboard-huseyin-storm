@@ -26,8 +26,6 @@ export class ProjectPageComponent implements OnInit {
       this.project$ = this.projectsService.getProject$(uid);
       this.users$ = this.projectsService.getUsersFromProject$(uid);
     });
-
-
   }
 
   ngOnInit(): void {
