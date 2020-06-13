@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-title>Users</mat-card-title>
+  <mat-card-content>
+    <div *ngIf="project$ | async as project">
+      <table [dataSource]="project.roles" class="mat-elevation-z8"
+             mat-table
+             multiTemplateDataRows>
+        <ng-container *ngFor="let column of columnsToDisplay" matColumnDef="{{column}}">
+          <th *matHeaderCellDef mat-header-cell>
+            {{column}}
+          </th>
+          <td *matCellDef="let element" mat-cell>
+            <div [ngSwitch]="column">
+              <div *ngSwitchCase="'members'">
+                <div *ngIf="(element.user | doc | async) as user">
+                  {{user.email}}
+                </div>
+              </div>
+              <div *ngSwitchCase="'role'">
+                <div>
+                  <mat-icon *ngIf="compareOwnerString(element.role); else member" aria-hidden="false"
+                            aria-label="owner">verified
+                  </mat-icon>
+                  <ng-template #member>
+                    {{element.role}}
+                    <button aria-label="Remove" mat-icon-button *ngIf="userIsOwner">
+                      <mat-icon aria-hidden="false" aria-label="remove" color="warn">clear</mat-icon>
+                    </button>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="columnsToDisplay" mat-header-row></tr>
+        <tr *matRowDef="let element; columns: columnsToDisplay" mat-row>
+      </table>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="openDialog()" color="primary" mat-raised-button>Add user</button>
+  </mat-card-actions>
+</mat-card>
