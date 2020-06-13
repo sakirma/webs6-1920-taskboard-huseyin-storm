@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Project, ProjectsService} from '../../../services/projects.service';
-import {AuthService} from '../../../services/auth.service';
 import {Observable} from 'rxjs';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {Router} from '@angular/router';
-import {FirestoreService} from "../../../services/firestore.service";
+
 
 
 

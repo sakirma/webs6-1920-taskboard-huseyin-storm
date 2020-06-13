@@ -12,7 +12,7 @@ export class SprintService {
   constructor(private firestore: AngularFirestore, private db: FirestoreService, private authService: AuthService) {
   }
 
-  private getSprints$(projectID: string) : Observable<any>{
+  private getSprints$(projectID: string): Observable<any>{
     return this.firestore.collection('projects').doc(projectID).collection<Sprint>('sprints').valueChanges({idField: 'uid'});
   }
 }

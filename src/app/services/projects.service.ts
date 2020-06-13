@@ -20,7 +20,7 @@ export class ProjectsService {
 
   }
 
-  public async getProject$(uid: String): Promise<Observable<Project>> {
+  public async getProject$(uid): Promise<Observable<Project>> {
     return this.db.doc$(`projects/${uid}`);
   }
 
