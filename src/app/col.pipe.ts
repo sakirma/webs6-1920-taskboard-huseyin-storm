@@ -3,13 +3,13 @@ import {FirestoreService} from './services/firestore.service';
 import {Observable} from 'rxjs';
 
 @Pipe({
-  name: 'doc'
+  name: 'col'
 })
-export class DocPipe implements PipeTransform {
+export class ColPipe implements PipeTransform {
   constructor(private db: FirestoreService) {
   }
 
   transform(value: any, ...args): Observable<any> {
-    return this.db.doc$(value.path);
+    return this.db.col$(value.path);
   }
 }
