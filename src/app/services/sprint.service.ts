@@ -5,13 +5,17 @@ import {AuthService} from './auth.service';
 import {Observable} from 'rxjs';
 import {Sprint} from '../models/Sprint';
 import {Story} from '../models/Story';
+import {first} from 'rxjs/operators';
+import {FirebaseApp} from '@angular/fire';
+import FieldValue = firebase.firestore.FieldValue;
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SprintService {
 
-  constructor(private firestore: AngularFirestore, private db: FirestoreService, private authService: AuthService) {
+  constructor(private firestore: AngularFirestore, private db: FirestoreService) {
   }
 
   public getSprints$(projectID: string): Observable<any>{
@@ -25,10 +29,40 @@ export class SprintService {
     return this.firestore.collection('projects').doc(projectID).collection('sprints').doc(sprint.uid).update(sprint);
   }
 
-  public async addUserStoryToSprint(projectID: string, sprintID: string, storyID: string){
-    await this.firestore.collection('projects').doc(projectID).collection('stories').doc<Story>(storyID).update({isAssigned: true});
+  public async changeSprintUserStory(projectID: string, prevSprintID: string, sprintID: string, storyID: string){
+
     const story = await this.db.doc<Story>(`projects/${projectID}/stories/${storyID}`);
-    
+    await this.firestore
+      .collection('projects')
+      .doc(projectID)
+      .collection('sprints')
+      .doc<any>(prevSprintID)
+      .update({ user_stories: FieldValue.arrayRemove(story.ref) });
+
+    await this.firestore
+      .collection('projects').doc(projectID)
+      .collection('sprints')
+      .doc<any>(sprintID)
+      .update({ user_stories: FieldValue.arrayUnion(story.ref) });
+  }
+
+  public async removeUserStoryFromSprint(projectID: string, sprintID: string, storyID: string){
+    const story = await this.db.doc<Story>(`projects/${projectID}/stories/${storyID}`);
+    await this.firestore.doc(story.ref.path).update({isAssigned: false});
+
+    await this.firestore
+      .collection('projects')
+      .doc(projectID)
+      .collection('sprints')
+      .doc<any>(sprintID)
+      .update({ user_stories: FieldValue.arrayRemove(story.ref) });
+
+  }
+
+  public async addUserStoryToSprint(projectID: string, sprintID: string, storyID: string){
+    const story = await this.db.doc<Story>(`projects/${projectID}/stories/${storyID}`);
+    await this.firestore.doc(story.ref.path).update({isAssigned: true});
+
     await this.firestore
       .collection('projects').doc(projectID)
       .collection('sprints')

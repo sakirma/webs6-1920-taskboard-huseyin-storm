@@ -52,20 +52,34 @@ export class SprintsOverviewComponent implements OnInit {
   }
 
   public async onStoriesDrop($event: CdkDragDrop<Story[], any>) {
-    console.log($event.previousContainer);
+    console.log($event.previousContainer.id, $event.container.id);
     if ($event.previousContainer === $event.container) {
       moveItemInArray($event.container.data, $event.previousIndex, $event.currentIndex);
     } else {
-      await this.sprintService.addUserStoryToSprint(this.projectID,
-        $event.container.id,
-        $event.previousContainer.data[$event.previousIndex].id);
 
-      transferArrayItem($event.previousContainer.data,
-        $event.container.data,
-        $event.previousIndex,
-        $event.currentIndex);
+      if ($event.previousContainer.id !== 'backLog' && $event.container.id !== 'backLog') {
+        await this.sprintService.changeSprintUserStory(
+          this.projectID,
+          $event.previousContainer.id,
+          $event.container.id,
+          $event.previousContainer.data[$event.previousIndex].id);
 
+        transferArrayItem($event.previousContainer.data,
+          $event.container.data,
+          $event.previousIndex,
+          $event.currentIndex);
 
+      } else if ($event.previousContainer.id === 'backLog') {
+
+        await this.sprintService.addUserStoryToSprint(this.projectID,
+          $event.container.id,
+          $event.previousContainer.data[$event.previousIndex].id);
+      } else if ($event.container.id === 'backLog') {
+
+        await this.sprintService.removeUserStoryFromSprint(this.projectID,
+          $event.previousContainer.id,
+          $event.previousContainer.data[$event.previousIndex].id);
+      }
     }
   }
 
