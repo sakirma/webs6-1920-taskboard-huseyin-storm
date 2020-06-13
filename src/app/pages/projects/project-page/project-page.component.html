@@ -1,8 +1,8 @@
-<div class="aligner" fxLayout="column" fxLayoutAlign="center" style="height: 100vh">
-  <div fxLayout="row" fxLayoutAlign="left">
+<div class="aligner" fxLayout="row" style="height: 100vh">
+  <div fxLayout="column" fxLayoutAlign="center">
     <app-user-list [project$]="project$"></app-user-list>
   </div>
-  <div fxLayout="column" fxLayoutAlign="center">
+  <div fxLayout="column" fxLayoutAlign="center" fxFlex="50%">
     <app-sprints-overview></app-sprints-overview>
   </div>
 </div>

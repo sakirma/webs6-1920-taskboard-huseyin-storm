@@ -5,7 +5,7 @@
       <mat-card-title>Backlog</mat-card-title>
       <mat-card-content>
         <div cdkDropList #backLog="cdkDropList" [cdkDropListData]="backlog$ | async"
-             [cdkDropListConnectedTo]="sprintList" class="list" (cdkDropListDropped)="onStoriesDrop($event)">
+             [cdkDropListConnectedTo]="" class="list" (cdkDropListDropped)="onStoriesDrop($event)">
           <div class="list-item" *ngFor="let story of backlog$ | async" cdkDrag>{{story}}</div>
         </div>
 
