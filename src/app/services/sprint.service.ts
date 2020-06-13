@@ -17,11 +17,11 @@ export class SprintService {
     return this.firestore.collection('projects').doc(projectID).collection<Sprint>('sprints').valueChanges({idField: 'uid'});
   }
 
-  public createSprint(projectID: string, sprint: Sprint){
+  public createSprint(projectID: string, sprint){
     return this.firestore.collection('projects').doc(projectID).collection('sprints').add(sprint);
   }
 
-  public updateSprint(projectID: string, sprint: Sprint){
+  public updateSprint(projectID: string, sprint){
     return this.firestore.collection('projects').doc(projectID).collection('sprints').doc(sprint.uid).update(sprint);
   }
 }

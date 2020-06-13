@@ -3,7 +3,6 @@ import {ProjectsService} from '../../../services/projects.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
-import {FirestoreService} from "../../../services/firestore.service";
 
 @Component({
   selector: 'app-create-project-page',

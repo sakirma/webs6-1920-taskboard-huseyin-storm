@@ -30,6 +30,7 @@ import { ProjectPageComponent } from './pages/projects/project-page/project-page
 import {DocPipe} from './doc.pipe';
 import { SprintsOverviewComponent } from './areas/sprints-overview/sprints-overview.component';
 import {OverlayModule} from '@angular/cdk/overlay';
+import { CreateSprintComponent } from './pages/sprints/create-sprint/create-sprint.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
     ProjectPageComponent,
     DocPipe,
     SprintsOverviewComponent,
+    CreateSprintComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import {RegisterPageComponent} from './pages/authentication/register-page/regist
 import {CreateProjectPageComponent} from './pages/projects/create-project-page/create-project-page.component';
 import {EditProjectPageComponent} from './pages/projects/edit-project-page/edit-project-page.component';
 import {ProjectPageComponent} from './pages/projects/project-page/project-page.component';
+import {CreateSprintComponent} from './pages/sprints/create-sprint/create-sprint.component';
 
 const redirectLoggedInToProjects = () => redirectLoggedInTo(['projects']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -45,7 +46,12 @@ const routes: Routes = [
     path: 'project',
     component: ProjectPageComponent,
     canActivate: [AngularFireAuthGuard],
-    data: {authGuardPipe: redirectUnauthorizedToLogin}}
+    data: {authGuardPipe: redirectUnauthorizedToLogin}},
+  {
+    path: 'create-sprint',
+    component: CreateSprintComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin}},
 
 ];
 
