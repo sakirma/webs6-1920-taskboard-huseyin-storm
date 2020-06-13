@@ -35,6 +35,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { SprintsOverviewComponent } from './areas/sprints-overview/sprints-overview.component';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { CreateSprintComponent } from './pages/sprints/create-sprint/create-sprint.component';
+import { CreateUserStoryComponent } from './pages/user_stories/create-user-story/create-user-story.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { CreateSprintComponent } from './pages/sprints/create-sprint/create-spri
     AddUserDialogComponent,
     SprintsOverviewComponent,
     CreateSprintComponent,
+    CreateUserStoryComponent,
   ],
   imports: [
     BrowserModule,
