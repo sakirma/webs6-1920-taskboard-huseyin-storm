@@ -34,7 +34,6 @@ export class ProjectsPageComponent implements OnInit {
   public projects$: Observable<Project[]>;
 
   constructor(public projectsService: ProjectService, private router: Router) {
-    console.log("YO");
     this.projectsService.getProjects$().then(e => {
       this.projects$ = e;
       this.projects$.subscribe(projects => {

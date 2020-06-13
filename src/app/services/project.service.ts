@@ -4,8 +4,11 @@ import {AuthService} from './auth.service';
 import {AngularFirestore, DocumentReference} from '@angular/fire/firestore';
 import {User} from '../models/User';
 import {FirestoreService} from './firestore.service';
-import {Role} from "../models/Role";
+import {Role, UserRole} from "../models/Role";
 import {Project} from "../models/Project";
+import {map} from "rxjs/operators";
+import FieldValue = firebase.firestore.FieldValue;
+import * as firebase from 'firebase';
 
 
 
@@ -21,7 +24,7 @@ export class ProjectService {
   }
 
   public async getProject$(uid: String): Promise<Observable<Project>> {
-    return this.db.doc$(`projects/${uid}`);
+    return this.db.docWithId$<Project>(`projects/${uid}`);
   }
 
   public async getProjects$(): Promise<Observable<Project[]>> {
@@ -29,23 +32,6 @@ export class ProjectService {
     this.projects$ = await this.db.colWithIds$('projects', ref => ref.where('members', 'array-contains', userRef));
     return this.projects$;
   }
-
-  // public getProjects$(): Observable<Project[]> {
-  //   const users$ = this.firestore.collection<User>('users').valueChanges({idField: 'uid'});
-  //   return combineLatest([users$, this.projects$]).pipe(map((results) => {
-  //     results[1].forEach(project => {
-  //       results[0].map(user => {
-  //         console.log(user.uid)
-  //         console.log(project.owner)
-  //         if (`users/${user.uid}` === project.owner) {
-  //           project.owner =  user.name;
-  //         }
-  //         return user;
-  //       });
-  //     });
-  //     return results[1];
-  //   }));
-  // }
 
   public getUsersFromProject$(uid: string): Observable<User[]> {
     return this.firestore.collection<User>('users', ref =>
@@ -74,4 +60,39 @@ export class ProjectService {
     await this.firestore.collection('projects').doc(project.id).update(project);
   }
 
+  public projectIncludesUser(project: Project, userRef: DocumentReference) {
+    for (let i of project.members)
+    {
+      if(i.id === userRef.id)
+        return true;
+    }
+    return false;
+  }
+
+  public async addUserToProject(project: Project, userRef: DocumentReference) {
+    await this.firestore.doc(`projects/${project.id}`).update({
+      members: FieldValue.arrayUnion(userRef),
+      roles: FieldValue.arrayUnion({role: Role.Member, user: userRef})
+    })
+  }
+
+  async removeUserFromProject(userRole: UserRole, project: Project) {
+    await this.firestore.doc(`projects/${project.id}`).update({
+      members: FieldValue.arrayRemove(userRole.user),
+      roles: FieldValue.arrayRemove({role: userRole.role, user: userRole.user})
+    });
+  }
+
+  async makeUserOwner(user: UserRole, project: Project) {
+    const currentOwner = await this.db.doc(`users/${this.authService.getUser.uid}`);
+
+    await this.firestore.doc(`projects/${project.id}`).update({
+      owner: user.user,
+      roles: FieldValue.arrayRemove({role: Role.Owner, user: currentOwner.ref}, {role: Role.Member, user: user.user})
+    });
+
+    await this.firestore.doc(`projects/${project.id}`).update({
+      roles: FieldValue.arrayUnion({role: Role.Member, user: currentOwner.ref}, {role: Role.Owner, user: user.user})
+    });
+  }
 }

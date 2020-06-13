@@ -32,6 +32,15 @@ export class FirestoreService {
     }));
   }
 
+  public docWithId$<T>(ref: DocPredicate<T>): Observable<T> {
+    return this.doc(ref).snapshotChanges().pipe(map(doc => {
+      const data = doc.payload.data();
+      const id = doc.payload.id;
+
+      return {id, ...data };
+    }));
+  }
+
   public col$<T>(ref: CollectionPredicate<T>, queryFn?): Observable<T[]> {
     return this.col(ref, queryFn).snapshotChanges().pipe(map(docs => {
       return docs.map(a => a.payload.doc.data()) as T[];
