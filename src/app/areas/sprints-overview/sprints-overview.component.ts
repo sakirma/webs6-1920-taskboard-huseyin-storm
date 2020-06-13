@@ -7,6 +7,9 @@ import {Story} from '../../models/Story';
 import {StoryService} from '../../services/story.service';
 import {CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {DocumentReference} from '@angular/fire/firestore';
+import {AuthService} from "../../services/auth.service";
+import {ProjectService} from "../../services/project.service";
+import {Project} from "../../models/Project";
 
 @Component({
   selector: 'app-sprints-overview',
@@ -21,15 +24,19 @@ export class SprintsOverviewComponent implements OnInit {
   public backlog: Story[] = [];
   public sprints: Sprint[] = [];
 
+  public project$: Observable<Project>;
   private projectID: string;
 
   public allDropLists = [ 'backLog' ];
 
   constructor(private sprintService: SprintService, private storyService: StoryService,
-              private route: ActivatedRoute, private router: Router) {
+              private route: ActivatedRoute, private router: Router, private auth: AuthService, private projectService: ProjectService) {
 
     route.params.subscribe(async value => {
       this.projectID = value.uid;
+
+      this.project$ = await projectService.getProject$(this.projectID);
+
       this.sprints$ = await sprintService.getSprints$(this.projectID);
       this.backlog$ = await storyService.getStories$(this.projectID);
 
@@ -85,5 +92,13 @@ export class SprintsOverviewComponent implements OnInit {
 
   public async onCreateSprint() {
     await this.router.navigate(['create-sprint', { uid: this.projectID}]);
+  }
+
+  async onCreateUserStory() {
+    await this.router.navigate(['create-user-story', {uid: this.projectID}]);
+  }
+
+  public userIsOwner(project: Project) : boolean {
+    return project.owner.id === this.auth.getUser.uid;
   }
 }

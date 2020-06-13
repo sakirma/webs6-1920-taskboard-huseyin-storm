@@ -1,6 +1,6 @@
 <div class="aligner" fxLayout="row" style="height: 100vh">
   <div fxLayout="column" fxLayoutAlign="center">
-    <app-user-list [project$]="project$"></app-user-list>
+    <app-user-list *ngIf="(project$ | async) as project" [project$]="project$"></app-user-list>
   </div>
   <div fxLayout="column" fxLayoutAlign="center" fxFlex="50%">
     <app-sprints-overview></app-sprints-overview>

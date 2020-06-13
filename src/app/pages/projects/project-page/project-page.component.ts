@@ -22,7 +22,6 @@ export class ProjectPageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-
+  async ngOnInit() {
   }
 }
