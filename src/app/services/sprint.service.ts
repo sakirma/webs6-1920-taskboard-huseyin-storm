@@ -32,6 +32,7 @@ export class SprintService {
   public async changeSprintUserStory(projectID: string, prevSprintID: string, sprintID: string, storyID: string){
 
     const story = await this.db.doc<Story>(`projects/${projectID}/stories/${storyID}`);
+
     await this.firestore
       .collection('projects')
       .doc(projectID)
@@ -39,11 +40,15 @@ export class SprintService {
       .doc<any>(prevSprintID)
       .update({ user_stories: FieldValue.arrayRemove(story.ref) });
 
+    
     await this.firestore
       .collection('projects').doc(projectID)
       .collection('sprints')
       .doc<any>(sprintID)
       .update({ user_stories: FieldValue.arrayUnion(story.ref) });
+
+
+
   }
 
   public async removeUserStoryFromSprint(projectID: string, sprintID: string, storyID: string){

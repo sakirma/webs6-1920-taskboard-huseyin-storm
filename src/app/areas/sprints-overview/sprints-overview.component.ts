@@ -7,9 +7,9 @@ import {Story} from '../../models/Story';
 import {StoryService} from '../../services/story.service';
 import {CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {DocumentReference} from '@angular/fire/firestore';
-import {AuthService} from "../../services/auth.service";
-import {ProjectService} from "../../services/project.service";
-import {Project} from "../../models/Project";
+import {AuthService} from '../../services/auth.service';
+import {ProjectService} from '../../services/project.service';
+import {Project} from '../../models/Project';
 
 @Component({
   selector: 'app-sprints-overview',
@@ -59,7 +59,6 @@ export class SprintsOverviewComponent implements OnInit {
   }
 
   public async onStoriesDrop($event: CdkDragDrop<Story[], any>) {
-    console.log($event.previousContainer.id, $event.container.id);
     if ($event.previousContainer === $event.container) {
       moveItemInArray($event.container.data, $event.previousIndex, $event.currentIndex);
     } else {
@@ -98,7 +97,7 @@ export class SprintsOverviewComponent implements OnInit {
     await this.router.navigate(['create-user-story', {uid: this.projectID}]);
   }
 
-  public userIsOwner(project: Project) : boolean {
+  public userIsOwner(project: Project): boolean {
     return project.owner.id === this.auth.getUser.uid;
   }
 }

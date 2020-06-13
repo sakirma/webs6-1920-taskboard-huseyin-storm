@@ -25,6 +25,7 @@ export class StoryService {
     const stories: Story[] = [];
     for (const storyID of storyIDs){
       this.db.doc$<Story>(storyID.path).subscribe(story => {
+        if (story === undefined) {return; }
         story.id = storyID.id;
         stories.push(story);
       });
