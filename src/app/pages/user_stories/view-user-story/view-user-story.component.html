@@ -1,11 +1,26 @@
-<app-sprint-story-board-list [sprint$]="sprint$"></app-sprint-story-board-list>
+<div cdkDropListGroup>
+  <div *ngIf="sprint" class="example-container">
+    <h2>{{sprint.name}}</h2>
+    <div
+      (cdkDropListDropped)="drop($event)"
+      [cdkDropListData]="backlogStories"
+      cdkDropListSortingDisabled
+      cdkDropList
+      class="example-list">
 
+      <div *ngFor="let itemRef of sprint.user_stories">
+        <div *ngIf="(itemRef | doc | async) as item">
+          <div *ngIf="!item.isArchived && !item.owner" cdkDrag class="example-box">
+            {{item.name}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
-<div *ngIf="(project$ | async) as project">
-  <div *ngFor="let memberDoc of project.members">
-    <div *ngIf="(memberDoc | doc | async) as member">
-      {{member.email}}
+  <div *ngIf="(project$ | async) as project">
+    <div *ngFor="let memberDoc of project.members">
+      <app-user-status-board [memberDoc]="memberDoc" [sprintDoc]="sprint$"></app-user-status-board>
     </div>
   </div>
 </div>

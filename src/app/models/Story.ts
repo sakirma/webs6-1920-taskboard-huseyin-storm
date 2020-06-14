@@ -14,12 +14,14 @@ export class Story {
   board_position: UserStoryStatus;
   status: string;
   storyPoints: number;
-  owner: string;
+  owner: DocumentReference;
+
+  isArchived: boolean;
 
   isAssigned: boolean;
   assigned_to_sprint: DocumentReference;
 
-  public constructor(name: string, description: string, boardPosition: UserStoryStatus, storyPoints: number, owner: string) {
+  public constructor(name: string, description: string, boardPosition: UserStoryStatus, storyPoints: number, owner: DocumentReference) {
     this.name = name;
     this.description = description;
     this.board_position = boardPosition;

@@ -47,7 +47,7 @@ export class FirestoreService {
     }));
   }
 
-  public colWithIds$<T>(ref: CollectionPredicate<T>, queryFn?): Observable<any[]> {
+  public colWithIds$<T>(ref: CollectionPredicate<T>, queryFn?): Observable<T[]> {
     return this.col(ref, queryFn).snapshotChanges().pipe(map(actions => {
       return actions.map(a => {
         const data = a.payload.doc.data();

@@ -38,7 +38,7 @@ import { CreateSprintComponent } from './pages/sprints/create-sprint/create-spri
 import { CreateUserStoryComponent } from './pages/user_stories/create-user-story/create-user-story.component';
 import { EditSprintComponent } from './pages/sprints/edit-sprint/edit-sprint.component';
 import { ViewUserStoryComponent } from './pages/user_stories/view-user-story/view-user-story.component';
-import { SprintStoryBoardListComponent } from './areas/sprint-story-board-list/sprint-story-board-list.component';
+import { UserStatusBoardComponent } from './areas/user-status-board/user-status-board.component';
 
 
 @NgModule({
@@ -59,7 +59,7 @@ import { SprintStoryBoardListComponent } from './areas/sprint-story-board-list/s
     CreateUserStoryComponent,
     EditSprintComponent,
     ViewUserStoryComponent,
-    SprintStoryBoardListComponent,
+    UserStatusBoardComponent,
   ],
   imports: [
     BrowserModule,
