@@ -20,6 +20,8 @@ export class UserStatusBoardComponent implements OnInit, OnDestroy {
   @Input() memberDoc: DocumentReference;
   @Input() sprintDoc: Observable<Sprint>;
 
+
+
   public newDocs: DocumentReference[] = [];
   public inProgressDocs: DocumentReference[] = [];
   public doneDocs: DocumentReference[] = [];
@@ -68,8 +70,10 @@ export class UserStatusBoardComponent implements OnInit, OnDestroy {
     }
     else if(event.isPointerOverContainer)
     {
+      let data = event.previousContainer.data[event.previousIndex];
+
       // noinspection ES6MissingAwait
-      this.storyService.addStoryToUser(this.memberDoc, event.previousContainer.data[event.previousIndex], status);
+      this.storyService.addStoryToUser(this.memberDoc, data, status);
       event.previousContainer.data.splice(event.previousIndex);
     }
   }

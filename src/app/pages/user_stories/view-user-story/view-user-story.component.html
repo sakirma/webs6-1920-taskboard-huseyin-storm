@@ -11,7 +11,11 @@
       <div *ngFor="let itemRef of sprint.user_stories">
         <div *ngIf="(itemRef | doc | async) as item">
           <div *ngIf="!item.isArchived && !item.owner" cdkDrag class="example-box">
-            {{item.name}}
+            <div>
+              {{item.storyPoints}}<br>
+              <b>{{item.name}}</b><br>
+              {{item.description}}
+            </div>
           </div>
         </div>
       </div>
@@ -23,4 +27,7 @@
       <app-user-status-board [memberDoc]="memberDoc" [sprintDoc]="sprint$"></app-user-status-board>
     </div>
   </div>
+</div>
+<div *ngIf="sprint">
+  <app-line-chart [sprint]="sprint" [projectId]="projectId" [reload]="this.reloadEmitter" ></app-line-chart>
 </div>

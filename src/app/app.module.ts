@@ -39,6 +39,8 @@ import { CreateUserStoryComponent } from './pages/user_stories/create-user-story
 import { EditSprintComponent } from './pages/sprints/edit-sprint/edit-sprint.component';
 import { ViewUserStoryComponent } from './pages/user_stories/view-user-story/view-user-story.component';
 import { UserStatusBoardComponent } from './areas/user-status-board/user-status-board.component';
+import {ChartsModule} from "ng2-charts";
+import { LineChartComponent } from './areas/line-chart/line-chart.component';
 
 
 @NgModule({
@@ -60,30 +62,32 @@ import { UserStatusBoardComponent } from './areas/user-status-board/user-status-
     EditSprintComponent,
     ViewUserStoryComponent,
     UserStatusBoardComponent,
+    LineChartComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    MatButtonModule,
-    DragDropModule,
-    MatCardModule,
-    MatInputModule,
-    MatSelectModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatSidenavModule,
-    MatSnackBarModule,
-    MatListModule,
-    FlexModule,
-    MatTableModule,
-    MatSortModule,
-    MatIconModule,
-    MatDialogModule,
-    FormsModule,
-    OverlayModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        MatButtonModule,
+        DragDropModule,
+        MatCardModule,
+        MatInputModule,
+        MatSelectModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatSidenavModule,
+        MatSnackBarModule,
+        MatListModule,
+        FlexModule,
+        MatTableModule,
+        MatSortModule,
+        MatIconModule,
+        MatDialogModule,
+        FormsModule,
+        OverlayModule,
+        ChartsModule
+    ],
   providers: [AuthService],
   bootstrap: [AppComponent]
 })

@@ -36,6 +36,8 @@ export class ViewUserStoryComponent implements OnInit, OnDestroy {
 
   public sprint: Sprint;
 
+  public reloadEmitter: EventEmitter<void> = new EventEmitter<void>();
+
   constructor(private activatedRoute: ActivatedRoute,
               private projectService: ProjectService,
               private router: Router,
@@ -87,6 +89,8 @@ export class ViewUserStoryComponent implements OnInit, OnDestroy {
               this.backlogStories.push(userStoryDoc);
             }
           }
+
+          this.reloadEmitter.emit();
         });
       }
     })
@@ -109,7 +113,8 @@ export class ViewUserStoryComponent implements OnInit, OnDestroy {
     }
     else if(event.isPointerOverContainer)
     {
-      this.storyService.addStoryToBacklog(event.previousContainer.data[event.previousIndex]);
+      let data = event.previousContainer.data[event.previousIndex];
+      this.storyService.addStoryToBacklog(data);
       event.previousContainer.data.splice(event.previousIndex);
     }
   }

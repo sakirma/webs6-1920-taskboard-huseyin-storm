@@ -1,5 +1,6 @@
 import DocumentReference = firebase.firestore.DocumentReference;
 import * as firebase from 'firebase';
+import {firestore} from "firebase";
 
 export enum UserStoryStatus {
   New = "New",
@@ -20,6 +21,8 @@ export class Story {
 
   isAssigned: boolean;
   assigned_to_sprint: DocumentReference;
+
+  updatedAt: firestore.Timestamp;
 
   public constructor(name: string, description: string, boardPosition: UserStoryStatus, storyPoints: number, owner: DocumentReference) {
     this.name = name;
