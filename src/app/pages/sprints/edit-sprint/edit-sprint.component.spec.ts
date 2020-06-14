@@ -8,6 +8,8 @@ import {Overlay} from '@angular/cdk/overlay';
 import {Observable, of} from 'rxjs';
 import {Sprint} from '../../../models/Sprint';
 import {SprintService} from '../../../services/sprint.service';
+import {Story} from '../../../models/Story';
+import {imports} from '../../../app.module.imports';
 
 
 export class FakeSprintService{
@@ -19,7 +21,8 @@ export class FakeSprintService{
     start_date: null,
     user_stories: [],
     stories_ref: of([]),
-    uid: 'testID'
+    uid: 'testID',
+    id: 'testID',
   }];
 
   public getSprints$(projectID: string): Observable<Sprint[]> {
@@ -34,18 +37,15 @@ describe('EditSprintComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ EditSprintComponent ],
+      imports,
       providers: [
-        { provider: SprintService, userValue: FakeSprintService }
+        { provider: SprintService, useValue: FakeSprintService }
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    TestBed.inject(FormBuilder);
-    TestBed.inject(AuthService);
-    TestBed.inject(MatSnackBar);
-    TestBed.inject(Overlay);
 
     fixture = TestBed.createComponent(EditSprintComponent);
     component = fixture.componentInstance;
