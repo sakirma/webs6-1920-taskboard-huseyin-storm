@@ -1,12 +1,9 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreDocument} from '@angular/fire/firestore';
 import {FirestoreService} from './firestore.service';
-import {AuthService} from './auth.service';
 import {Observable} from 'rxjs';
 import {Sprint} from '../models/Sprint';
 import {Story} from '../models/Story';
-import {debounceTime, first} from 'rxjs/operators';
-import {FirebaseApp} from '@angular/fire';
 import FieldValue = firebase.firestore.FieldValue;
 import * as firebase from 'firebase';
 
@@ -81,6 +78,34 @@ export class SprintService {
 
   public async getSprint$(doc: AngularFirestoreDocument<Sprint>) {
     return this.db.docWithId$(doc);
+  }
+
+  public getBurnDown(projectId: string, sprintId: string, startDate: Date, endDate: Date) {
+    return new Promise<any>((resolve, reject) => {
+
+      const sub = this.firestore.collection<Story>(`/projects/${projectId}/stories`, ref => ref.where('assigned_sprint', '==', sprintId)).valueChanges().subscribe((userstories) => {
+        // this gives an object with dates as keys
+
+
+        const grouped: Array<{ date: string, open: number, optimal: number }> = [];
+
+        let day = 0;
+        let storiesPerDay = userstories.length / (Math.floor(endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+        for (const d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+          grouped.push({
+            date: d.toLocaleDateString(),
+            open: userstories.length - userstories.filter(x => {
+              const date = x.updatedAt.toDate();
+              return x.status === 'Done' && (date.getDate() <= d.getDate() || date.getMonth() < d.getMonth())
+            }).length,
+            optimal: Math.ceil(userstories.length - (storiesPerDay * day++))
+          });
+        }
+
+        sub.unsubscribe();
+        resolve(grouped);
+      });
+    });
   }
 }
 

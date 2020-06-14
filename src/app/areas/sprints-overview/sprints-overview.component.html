@@ -23,7 +23,7 @@
       </mat-card-content>
       <div cdkDropList id="{{sprint.uid}}" [cdkDropListData]="(sprint.stories_ref | async) || []"
            [cdkDropListConnectedTo]="allDropLists" class="example-list" (cdkDropListDropped)="onStoriesDrop($event)">
-        <div class="example-box" *ngFor="let story of sprint.stories_ref | async" cdkDrag>
+        <div class="example-box" *ngFor="let story of sprint.stories_ref | async" cdkDrag (click)="editStory(story.id)">
           <div>
             {{story.name}}
           </div>
@@ -39,3 +39,35 @@
     </mat-card-actions>
   </mat-card-content>
 </mat-card>
+
+<div fxLayout="row" fxLayoutAlign="center" *ngIf="archivedSprints.length > 0" >
+  <mat-card fxFlex="100%">
+    <mat-card-title>Archived Sprints</mat-card-title>
+    <mat-card-content>
+      <table mat-table
+             [dataSource]="archivedSprints" multiTemplateDataRows
+             class="mat-elevation-z8"
+            style="width: 100%">
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>name</th>
+          <td mat-cell *matCellDef="let element">
+            <div>
+              {{element.name}}
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unarchive">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element" style="text-align: right">
+            <button mat-button mat-raised-button color="primary" (click)="toggleArchive(projectID, element)">Unarchive</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="archivedColumnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let element; columns: archivedColumnsToDisplay;">
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>

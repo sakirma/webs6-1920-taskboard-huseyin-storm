@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ProjectService} from '../../../services/project.service';
-import {Observable} from 'rxjs';
-import {Project} from '../../../models/Project';
-import {ActivatedRoute, ActivatedRouteSnapshot, Router} from '@angular/router';
-import {Story, UserStoryStatus} from '../../../models/Story';
-import {StoryService} from '../../../services/story.service';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ProjectService} from "../../../services/project.service";
+import {Observable} from "rxjs";
+import {Project} from "../../../models/Project";
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
+import {Story, UserStoryStatus} from "../../../models/Story";
+import {StoryService} from "../../../services/story.service";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-create-user-story',
@@ -19,7 +20,7 @@ export class CreateUserStoryComponent implements OnInit {
   public project$: Observable<Project>;
   private projectId: string;
 
-  constructor(private fb: FormBuilder, private projectService: ProjectService, private storyService: StoryService, private router: Router, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private userService: UserService, private projectService: ProjectService, private storyService: StoryService, private router: Router, private route: ActivatedRoute) {
     this.userStoryForm = this.fb.group({
       name: [null, Validators.required],
       description: [''],
@@ -38,12 +39,12 @@ export class CreateUserStoryComponent implements OnInit {
   }
 
   public async createUserStory() {
-    const story = new Story(
-      this.userStoryForm.get('name').value,
-      this.userStoryForm.get('description').value,
-      UserStoryStatus[this.userStoryForm.get('status').value.replace(/\s/g, '')],
-      this.userStoryForm.get('storyPoints').value,
-      this.userStoryForm.get('owner').value
+    let story = new Story(
+      this.userStoryForm.get("name").value,
+      this.userStoryForm.get("description").value,
+      UserStoryStatus[this.userStoryForm.get("status").value.replace(/\s/g, "")],
+      this.userStoryForm.get("storyPoints").value,
+      await this.userService.getUserDocRef(this.userStoryForm.get("owner").value),
     );
 
     await this.storyService.createStory(this.projectId, story);

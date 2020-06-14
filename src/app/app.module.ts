@@ -38,9 +38,10 @@ import { CreateSprintComponent } from './pages/sprints/create-sprint/create-spri
 import { CreateUserStoryComponent } from './pages/user_stories/create-user-story/create-user-story.component';
 import { EditSprintComponent } from './pages/sprints/edit-sprint/edit-sprint.component';
 import { ViewUserStoryComponent } from './pages/user_stories/view-user-story/view-user-story.component';
-import { SprintStoryBoardListComponent } from './areas/sprint-story-board-list/sprint-story-board-list.component';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import { UserStatusBoardComponent } from './areas/user-status-board/user-status-board.component';
+import {ChartsModule} from "ng2-charts";
+import { LineChartComponent } from './areas/line-chart/line-chart.component';
+import { EditStoriesComponent } from './pages/user_stories/edit-stories/edit-stories.component';
 
 
 @NgModule({
@@ -61,33 +62,34 @@ import {MatNativeDateModule} from '@angular/material/core';
     CreateUserStoryComponent,
     EditSprintComponent,
     ViewUserStoryComponent,
-    SprintStoryBoardListComponent,
+    UserStatusBoardComponent,
+    LineChartComponent,
+    EditStoriesComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatNativeDateModule,
-    BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    MatButtonModule,
-    DragDropModule,
-    MatCardModule,
-    MatInputModule,
-    MatSelectModule,
-    MatRadioModule,
-    ReactiveFormsModule,
-    MatSidenavModule,
-    MatSnackBarModule,
-    MatListModule,
-    FlexModule,
-    MatTableModule,
-    MatSortModule,
-    MatIconModule,
-    MatDialogModule,
-    FormsModule,
-    OverlayModule,
-    MatDatepickerModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        MatButtonModule,
+        DragDropModule,
+        MatCardModule,
+        MatInputModule,
+        MatSelectModule,
+        MatRadioModule,
+        ReactiveFormsModule,
+        MatSidenavModule,
+        MatSnackBarModule,
+        MatListModule,
+        FlexModule,
+        MatTableModule,
+        MatSortModule,
+        MatIconModule,
+        MatDialogModule,
+        FormsModule,
+        OverlayModule,
+        ChartsModule
+    ],
   providers: [AuthService],
   bootstrap: [AppComponent]
 })

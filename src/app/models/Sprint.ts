@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 
 export interface Sprint {
   uid: string;
+  id: string;
   name: string;
   active: boolean;
   start_date: Timestamp;
