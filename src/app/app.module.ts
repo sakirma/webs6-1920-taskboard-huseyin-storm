@@ -27,16 +27,19 @@ import { RegisterPageComponent } from './pages/authentication/register-page/regi
 import { CreateProjectPageComponent } from './pages/projects/create-project-page/create-project-page.component';
 import { EditProjectPageComponent } from './pages/projects/edit-project-page/edit-project-page.component';
 import { ProjectPageComponent } from './pages/projects/project-page/project-page.component';
-import {DocPipe} from "./doc.pipe";
-import {MatIconModule} from "@angular/material/icon";
+import {DocPipe} from './doc.pipe';
+import {MatIconModule} from '@angular/material/icon';
 import { UserListComponent } from './areas/user-list/user-list.component';
 import { AddUserDialogComponent } from './areas/add-user-dialog/add-user-dialog.component';
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule} from '@angular/material/dialog';
 import { SprintsOverviewComponent } from './areas/sprints-overview/sprints-overview.component';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { CreateSprintComponent } from './pages/sprints/create-sprint/create-sprint.component';
 import { CreateUserStoryComponent } from './pages/user_stories/create-user-story/create-user-story.component';
 import { EditSprintComponent } from './pages/sprints/edit-sprint/edit-sprint.component';
+import { ViewUserStoryComponent } from './pages/user_stories/view-user-story/view-user-story.component';
+import { SprintStoryBoardListComponent } from './areas/sprint-story-board-list/sprint-story-board-list.component';
+
 
 @NgModule({
   declarations: [
@@ -55,6 +58,8 @@ import { EditSprintComponent } from './pages/sprints/edit-sprint/edit-sprint.com
     CreateSprintComponent,
     CreateUserStoryComponent,
     EditSprintComponent,
+    ViewUserStoryComponent,
+    SprintStoryBoardListComponent,
   ],
   imports: [
     BrowserModule,

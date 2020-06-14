@@ -1,0 +1,11 @@
+<app-sprint-story-board-list [sprint$]="sprint$"></app-sprint-story-board-list>
+
+
+
+<div *ngIf="(project$ | async) as project">
+  <div *ngFor="let memberDoc of project.members">
+    <div *ngIf="(memberDoc | doc | async) as member">
+      {{member.email}}
+    </div>
+  </div>
+</div>
