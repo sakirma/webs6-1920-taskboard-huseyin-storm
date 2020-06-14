@@ -17,16 +17,16 @@ export class CreateUserStoryComponent implements OnInit {
   public userStoryForm: FormGroup;
   public status: Array<string> = [];
 
-  public project$: Observable<Project>
+  public project$: Observable<Project>;
   private projectId: string;
 
   constructor(private fb: FormBuilder, private userService: UserService, private projectService: ProjectService, private storyService: StoryService, private router: Router, private route: ActivatedRoute) {
     this.userStoryForm = this.fb.group({
       name: [null, Validators.required],
-      description: [""],
+      description: [''],
       status: [null, Validators.required],
       storyPoints: [null, Validators.required],
-      owner: [""]
+      owner: ['']
     });
 
     this.status = Object.values(UserStoryStatus);

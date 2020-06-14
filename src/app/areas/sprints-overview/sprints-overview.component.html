@@ -29,7 +29,6 @@
       <mat-card-content>
         <p>Start date: {{sprint.start_date.toDate() | date: 'dd/MM/yyyy'}}</p>
         <p>End date: {{sprint.end_date.toDate() | date: 'dd/MM/yyyy'}}</p>
-        <p>Days left: {{ (sprint.end_date.toMillis() - sprint.start_date.toMillis())  / (1000 * 3600 * 24) }}</p>
       </mat-card-content>
       <div cdkDropList id="{{sprint.uid}}" [cdkDropListData]="(sprint.stories_ref | async) || []"
            [cdkDropListConnectedTo]="allDropLists" class="example-list" (cdkDropListDropped)="onStoriesDrop($event)">

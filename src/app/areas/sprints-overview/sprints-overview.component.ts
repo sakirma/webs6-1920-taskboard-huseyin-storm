@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SprintService} from '../../services/sprint.service';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Sprint} from '../../models/Sprint';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Story} from '../../models/Story';
@@ -15,11 +15,13 @@ import {Project} from '../../models/Project';
   templateUrl: './sprints-overview.component.html',
   styleUrls: ['./sprints-overview.component.scss']
 })
-export class SprintsOverviewComponent implements OnInit {
+export class SprintsOverviewComponent implements OnInit, OnDestroy {
 
   public sprints$: Observable<Sprint[]>;
-  private backlog$: Observable<Story[]>;
   public project$: Observable<Project>;
+
+  private backLogSub: Subscription;
+  private sprintSub: Subscription;
 
   public backlog: Story[] = [];
   public sprints: Sprint[] = [];
@@ -31,6 +33,7 @@ export class SprintsOverviewComponent implements OnInit {
 
   public archivedSprints: Sprint[] = [];
 
+
   constructor(private sprintService: SprintService, private storyService: StoryService,
               private route: ActivatedRoute, private router: Router, private auth: AuthService, private projectService: ProjectService) {
 
@@ -39,9 +42,9 @@ export class SprintsOverviewComponent implements OnInit {
       this.project$ = await projectService.getProject$(this.projectID);
 
       this.sprints$ = await sprintService.getSprints$(this.projectID);
-      this.backlog$ = await storyService.getStories$(this.projectID);
+      const backlog = await storyService.getStories$(this.projectID);
 
-      this.sprints$.subscribe( async sprints => {
+      this.sprintSub = this.sprints$.subscribe( async sprints => {
         this.allDropLists.push(...sprints.map(sprint => sprint.uid));
 
         this.archivedSprints = [];
@@ -57,8 +60,7 @@ export class SprintsOverviewComponent implements OnInit {
           }
         }
       });
-
-      this.backlog$.subscribe(stories => {
+      this.backLogSub = backlog.subscribe(stories => {
         this.backlog = stories.filter(story =>  !story.isAssigned);
       });
 
@@ -68,6 +70,10 @@ export class SprintsOverviewComponent implements OnInit {
 
   ngOnInit(): void {
 
+  }
+  ngOnDestroy() {
+    this.sprintSub.unsubscribe();
+    this.backLogSub.unsubscribe();
   }
 
   public async onStoriesDrop($event: CdkDragDrop<Story[], any>) {
@@ -131,3 +137,4 @@ export class SprintsOverviewComponent implements OnInit {
     await this.sprintService.archiveSprint(this.projectID, sprint);
   }
 }
+

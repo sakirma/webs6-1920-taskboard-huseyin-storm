@@ -13,7 +13,6 @@ export class ProjectPageComponent implements OnInit {
 
   public project$: Observable<Project>;
 
-
   constructor(private projectsService: ProjectService, private route: ActivatedRoute) {
     route.params.subscribe(async value => {
       const uid = value.uid;

@@ -39,7 +39,7 @@ import { CreateUserStoryComponent } from './pages/user_stories/create-user-story
 import { EditSprintComponent } from './pages/sprints/edit-sprint/edit-sprint.component';
 import { ViewUserStoryComponent } from './pages/user_stories/view-user-story/view-user-story.component';
 import { UserStatusBoardComponent } from './areas/user-status-board/user-status-board.component';
-import {ChartsModule} from "ng2-charts";
+import {ChartsModule} from 'ng2-charts';
 import { LineChartComponent } from './areas/line-chart/line-chart.component';
 import { EditStoriesComponent } from './pages/user_stories/edit-stories/edit-stories.component';
 

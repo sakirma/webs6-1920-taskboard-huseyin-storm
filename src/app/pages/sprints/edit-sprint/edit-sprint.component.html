@@ -1,1 +1,60 @@
-<p>edit-sprint works!</p>
+<div class="align-form-center">
+  <form (ngSubmit)="updateSprint()" [formGroup]="sprintForm" novalidate>
+    <mat-card class="login-card">
+      <mat-card-header class="no-margin-card-header">
+        <mat-card-title>Edit a sprint</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <label>
+                <input formControlName="name" matInput placeholder="Project name">
+              </label>
+              <mat-error>
+                The sprint name is <strong>required!</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <label>
+                Start date
+                <input type="date" formControlName="startDate" matInput>
+              </label>
+              <br>
+              <label>
+                End date
+                <input type="date" formControlName="endDate" matInput placeholder="Start date">
+              </label>
+              <br>
+              <mat-error>
+                the dates are <strong>required!</strong>
+              </mat-error>
+              <mat-error *ngIf="sprintForm.errors?.dateNotValid">
+                The start date can not be after the end date!
+              </mat-error>
+              <mat-error>
+                the dates are <strong>required!</strong>
+              </mat-error>
+              <mat-error *ngIf="sprintForm.errors?.dateNotValid">
+                The start date can not be after the end date!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button [disabled]="!sprintForm.valid" class="full-width" color="primary" mat-raised-button type="submit">Add sprint</button>
+      </mat-card-actions>
+
+    </mat-card>
+  </form>
+</div>
+
