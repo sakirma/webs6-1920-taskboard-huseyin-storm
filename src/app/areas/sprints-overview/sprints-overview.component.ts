@@ -44,9 +44,7 @@ export class SprintsOverviewComponent implements OnInit {
         this.sprints = sprints;
 
         for (const sprint of this.sprints){
-
           sprint.stories_ref = await this.storyService.getStoryDocs(sprint.user_stories, sprint.uid);
-          console.log(sprint.stories_ref);
         }
       });
 
