@@ -21,7 +21,6 @@ export class EditProjectPageComponent implements OnInit {
       description: [null],
     });
 
-
     this.editedProject = this.projectsService.selectedProject;
     this.projectForm.get('name').setValue(this.editedProject.name);
     this.projectForm.get('description').setValue(this.editedProject.description);

@@ -34,14 +34,14 @@ export class AddUserDialogComponent {
     if (userRef) {
       if(this.projectService.projectIncludesUser(this.data.project, userRef))
       {
-        this.snackBar.open("User already exists in the project", 'Dismiss', {duration: 3000});
+        this.snackBar.open('User already exists in the project', 'Dismiss', {duration: 3000});
         return;
       }
 
       await this.projectService.addUserToProject(this.data.project, userRef);
       this.dialogRef.close();
     } else {
-      this.snackBar.open("Couldn't find the user", 'Dismiss', {duration: 3000});
+      this.snackBar.open('Couldn\'t find the user', 'Dismiss', {duration: 3000});
     }
   }
 }

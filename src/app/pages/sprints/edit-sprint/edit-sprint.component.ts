@@ -22,7 +22,11 @@ export class EditSprintComponent implements OnInit {
       this.projectID = value.uid;
       this.sprintID = value.sprintID;
 
-      this.sprint$ = this.sprintService.getSprints$(this.sprintID);
+      /*this.sprint$ = await this.sprintService.getSprintDoc(this.sprintID, this.projectID).then(sprint => {
+        return sprint.get().subscribe(s => {
+          return s.data();
+        });
+      });*/
 
       this.sprintForm = this.fb.group({
         name: [null, Validators.required],
