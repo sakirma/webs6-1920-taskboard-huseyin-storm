@@ -140,5 +140,9 @@ export class SprintsOverviewComponent implements OnInit, OnDestroy {
   public async editSprint(sprint: Sprint) {
     await this.router.navigate(['edit-sprint', {pUid: this.projectID, stUid: sprint.uid}]);
   }
+
+  public canUnarchive() : boolean {
+    return this.sprints.length === 0;
+  }
 }
 
