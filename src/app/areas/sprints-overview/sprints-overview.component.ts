@@ -136,5 +136,9 @@ export class SprintsOverviewComponent implements OnInit, OnDestroy {
     sprint.active = false;
     await this.sprintService.archiveSprint(this.projectID, sprint);
   }
+
+  public async editSprint(sprint: Sprint) {
+    await this.router.navigate(['edit-sprint', {pUid: this.projectID, stUid: sprint.uid}]);
+  }
 }
 
