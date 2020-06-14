@@ -20,11 +20,11 @@ export class SprintsOverviewComponent implements OnInit {
 
   public sprints$: Observable<Sprint[]>;
   private backlog$: Observable<Story[]>;
+  public project$: Observable<Project>;
 
   public backlog: Story[] = [];
   public sprints: Sprint[] = [];
 
-  public project$: Observable<Project>;
   private projectID: string;
 
   public allDropLists = [ 'backLog' ];
@@ -44,7 +44,9 @@ export class SprintsOverviewComponent implements OnInit {
         this.sprints = sprints;
 
         for (const sprint of this.sprints){
+
           sprint.stories_ref = await this.storyService.getStoryDocs(sprint.user_stories, sprint.uid);
+          console.log(sprint.stories_ref);
         }
       });
 
