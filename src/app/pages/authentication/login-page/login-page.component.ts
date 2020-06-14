@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -33,9 +33,4 @@ export class LoginPageComponent implements OnInit {
         this.snackBar.open(`${error.message}`, 'Dismiss', {duration: 3000});
       });
   }
-
-  onLogout(): void {
-
-  }
-
 }

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {Sprint} from "../../models/Sprint";
+import {Observable} from 'rxjs';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {Sprint} from '../../models/Sprint';
 import DocumentReference = firebase.firestore.DocumentReference;
 import * as firebase from 'firebase';
 
@@ -18,8 +18,8 @@ export class SprintStoryBoardListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(!this.sprint$) {
-      console.warn("No sprint is given!");
+    if (!this.sprint$) {
+      console.warn('No sprint is given!');
     }
   }
 

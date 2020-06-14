@@ -39,6 +39,8 @@ import { CreateUserStoryComponent } from './pages/user_stories/create-user-story
 import { EditSprintComponent } from './pages/sprints/edit-sprint/edit-sprint.component';
 import { ViewUserStoryComponent } from './pages/user_stories/view-user-story/view-user-story.component';
 import { SprintStoryBoardListComponent } from './areas/sprint-story-board-list/sprint-story-board-list.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 @NgModule({
@@ -64,6 +66,7 @@ import { SprintStoryBoardListComponent } from './areas/sprint-story-board-list/s
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatNativeDateModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     MatButtonModule,
@@ -82,7 +85,8 @@ import { SprintStoryBoardListComponent } from './areas/sprint-story-board-list/s
     MatIconModule,
     MatDialogModule,
     FormsModule,
-    OverlayModule
+    OverlayModule,
+    MatDatepickerModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
