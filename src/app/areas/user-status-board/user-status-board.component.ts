@@ -38,7 +38,7 @@ export class UserStatusBoardComponent implements OnInit, OnDestroy {
       {
         let story$ = await this.storyService.getStoryWithDoc$(userStoryDoc);
         this.subscription = story$.subscribe(async story => {
-          if(story.owner && story.owner.path === this.memberDoc.path && !story.isArchived)
+          if(story.owner && story.owner.path === this.memberDoc.path && !story.isArchived && story.isAssigned)
           {
             switch (story.status) {
               case UserStoryStatus.New:

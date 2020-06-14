@@ -21,22 +21,17 @@ import {take} from "rxjs/operators";
 })
 export class ViewUserStoryComponent implements OnInit, OnDestroy {
 
-  private sprintId: string;
   public projectId: string;
-
   public project$: Observable<Project>;
   public sprint$: Observable<Sprint>;
   public sprintDoc: AngularFirestoreDocument<Sprint>;
-
+  public backlogStories: DocumentReference[] = [];
+  public sprint: Sprint;
+  public reloadEmitter: EventEmitter<void> = new EventEmitter<void>();
+  private sprintId: string;
   private projectSub: Subscription;
   private sprintSub: Subscription;
-
-  public backlogStories: DocumentReference[] = [];
   private subscription: Subscription;
-
-  public sprint: Sprint;
-
-  public reloadEmitter: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private activatedRoute: ActivatedRoute,
               private projectService: ProjectService,
@@ -61,32 +56,35 @@ export class ViewUserStoryComponent implements OnInit, OnDestroy {
     }
 
     this.projectSub = this.project$.subscribe(e => {
-      if (!e.name)
-      {
+      if (!e.name) {
         this.redirectBack();
         return;
       }
     });
 
-    this.sprintSub = this.sprint$.subscribe(e => {
-      if (!e.name)
-      {
-        this.redirectBack();
+    this.sprintSub = this.sprint$.subscribe(async e => {
+      if (!e.name) {
+        await this.redirectBack();
         return;
       }
-    })
 
-    this.sprint$.pipe(take(1)).subscribe(async e => {
       this.sprint = e;
-      for ( let userStoryDoc of e.user_stories )
-      {
+      for (let userStoryDoc of e.user_stories) {
         let story$ = await this.storyService.getStoryWithDoc$(userStoryDoc);
         this.subscription = story$.subscribe(async story => {
-          if(!story.owner && !story.isArchived)
-          {
-            if(!this.backlogStories.includes(userStoryDoc))
-            {
+          const uIndex = this.sprint.user_stories.indexOf(userStoryDoc, 0);
+          if (!story.isAssigned && uIndex > -1) {
+            this.sprint.user_stories.splice(uIndex, 1);
+          }
+
+          if (!story.owner && !story.isArchived && story.isAssigned) {
+            if (!this.backlogStories.includes(userStoryDoc)) {
               this.backlogStories.push(userStoryDoc);
+            }
+
+            if(!this.sprint.user_stories.includes(userStoryDoc))
+            {
+              this.sprint.user_stories.push(userStoryDoc);
             }
           }
 
@@ -102,20 +100,18 @@ export class ViewUserStoryComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  private async redirectBack() {
-    await this.router.navigate(['/projects']);
-    this.snackBar.open("given ID was undefined", 'Dismiss', {duration: 3000})
-  }
-
   public drop(event: CdkDragDrop<DocumentReference[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    }
-    else if(event.isPointerOverContainer)
-    {
+    } else if (event.isPointerOverContainer) {
       let data = event.previousContainer.data[event.previousIndex];
       this.storyService.addStoryToBacklog(data);
       event.previousContainer.data.splice(event.previousIndex);
     }
+  }
+
+  private async redirectBack() {
+    await this.router.navigate(['/projects']);
+    this.snackBar.open("given ID was undefined", 'Dismiss', {duration: 3000})
   }
 }
