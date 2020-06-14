@@ -27,6 +27,12 @@ export class SprintService {
     return this.firestore.collection('projects').doc(projectID).collection('sprints').doc(sprint.uid).update(sprint);
   }
 
+  public archiveSprint(projectID: string, sprint) {
+    return this.firestore.collection('projects').doc(projectID).collection('sprints').doc(sprint.uid).update({
+      active: sprint.active
+    });
+  }
+
   public async changeSprintUserStory(projectID: string, prevSprintID: string, sprintID: string, storyID: string) {
 
     const story = await this.db.doc<Story>(`projects/${projectID}/stories/${storyID}`);

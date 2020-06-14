@@ -5,8 +5,7 @@ import {Sprint} from '../../models/Sprint';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Story} from '../../models/Story';
 import {StoryService} from '../../services/story.service';
-import {CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {DocumentReference} from '@angular/fire/firestore';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {AuthService} from '../../services/auth.service';
 import {ProjectService} from '../../services/project.service';
 import {Project} from '../../models/Project';
@@ -133,5 +132,17 @@ export class SprintsOverviewComponent implements OnInit, OnDestroy {
     await this.sprintService.updateSprint(projectId, sprint);
   }
 
+  public async archiveSprint(sprint: Sprint) {
+    sprint.active = false;
+    await this.sprintService.archiveSprint(this.projectID, sprint);
+  }
+
+  public async editSprint(sprint: Sprint) {
+    await this.router.navigate(['edit-sprint', {pUid: this.projectID, stUid: sprint.uid}]);
+  }
+
+  public canUnarchive() : boolean {
+    return this.sprints.length === 0;
+  }
 }
 

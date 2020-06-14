@@ -16,7 +16,16 @@
       </mat-card-content>
     </mat-card>
     <mat-card *ngFor="let sprint of sprints">
-      <mat-card-title (click)="openSprintPage(sprint.uid)" style="cursor: pointer">{{sprint.name}}</mat-card-title>
+      <mat-card-title style="cursor: pointer" >
+        <div (click)="openSprintPage(sprint.uid)">
+          {{sprint.name}}
+        </div>
+        <div fxFlex></div>
+        <button mat-button (click)="editSprint(sprint)">Edit</button>
+        <button mat-icon-button aria-label="Archive" (click)="archiveSprint(sprint)">
+          <mat-icon>archive</mat-icon>
+        </button>
+      </mat-card-title>
       <mat-card-content>
         <p>Start date: {{sprint.start_date.toDate() | date: 'dd/MM/yyyy'}}</p>
         <p>End date: {{sprint.end_date.toDate() | date: 'dd/MM/yyyy'}}</p>
@@ -32,7 +41,7 @@
     </mat-card>
 
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onCreateSprint()" >Create sprint</button>
+      <button mat-raised-button color="primary" (click)="onCreateSprint()">Create sprint</button>
       <div *ngIf="(project$ | async) as project" style="display: inline; margin-left: 15px">
         <button mat-raised-button color="primary" *ngIf="userIsOwner(project)" (click)="onCreateUserStory()" >Create User Story</button>
       </div>
@@ -61,7 +70,7 @@
         <ng-container matColumnDef="unarchive">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let element" style="text-align: right">
-            <button mat-button mat-raised-button color="primary" (click)="toggleArchive(projectID, element)">Unarchive</button>
+            <button *ngIf="canUnarchive()" mat-button mat-raised-button color="primary" (click)="toggleArchive(projectID, element)">Set Active</button>
           </td>
         </ng-container>
 

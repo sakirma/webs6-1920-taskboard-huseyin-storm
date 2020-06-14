@@ -11,6 +11,7 @@ import {CreateSprintComponent} from './pages/sprints/create-sprint/create-sprint
 import {CreateUserStoryComponent} from "./pages/user_stories/create-user-story/create-user-story.component";
 import {ViewUserStoryComponent} from "./pages/user_stories/view-user-story/view-user-story.component";
 import {EditStoriesComponent} from "./pages/user_stories/edit-stories/edit-stories.component";
+import {EditSprintComponent} from "./pages/sprints/edit-sprint/edit-sprint.component";
 
 const redirectLoggedInToProjects = () => redirectLoggedInTo(['projects']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -48,6 +49,12 @@ const routes: Routes = [
   {
     path: 'edit-project',
     component: EditProjectPageComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin}
+  },
+  {
+    path: 'edit-sprint',
+    component: EditSprintComponent,
     canActivate: [AngularFireAuthGuard],
     data: {authGuardPipe: redirectUnauthorizedToLogin}
   },

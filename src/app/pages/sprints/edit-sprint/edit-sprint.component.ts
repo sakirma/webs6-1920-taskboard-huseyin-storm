@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SprintService} from '../../../services/sprint.service';
 import {Observable} from 'rxjs';
 import {Sprint} from '../../../models/Sprint';
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-edit-sprint',
@@ -18,32 +19,31 @@ export class EditSprintComponent implements OnInit {
 
   private sprint$: Observable<Sprint>;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private sprintService: SprintService, private router: Router) {
-    route.params.subscribe(async value => {
-      this.projectID = value.uid;
-      this.sprintID = value.sprintID;
+  private currentSprint: Sprint;
 
-      /*this.sprint$ = await this.sprintService.getSprintDoc(this.sprintID, this.projectID).then(sprint => {
-        return sprint.get().subscribe(s => {
-          return s.data();
-        });
-      });*/
-
-      this.sprintForm = this.fb.group({
-        name: [null, Validators.required],
-        startDate: [null, Validators.required],
-        endDate: [null, Validators.required]
-      }, { validators: this.dateValidator });
-
-      this.sprint$.subscribe(sprint => {
-        this.sprintForm.get('name').setValue(sprint.name);
-        this.sprintForm.get('startDate').setValue(sprint.start_date.toDate());
-        this.sprintForm.get('endDate').setValue(sprint.end_date.toDate());
-      });
-    });
+  constructor(private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private sprintService: SprintService,
+              private router: Router) {
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.projectID = this.route.snapshot.params.pUid;
+    this.sprintID = this.route.snapshot.params.stUid;
+
+    let sprintDoc = await this.sprintService.getSprintDoc(this.projectID, this.sprintID);
+    this.sprint$ = await this.sprintService.getSprint$(sprintDoc);
+    let sprint = await this.sprint$.pipe(first()).toPromise();
+    this.currentSprint = sprint;
+
+    this.sprintForm = this.fb.group({
+      name: [sprint.name, Validators.required],
+      startDate: [null, Validators.required],
+      endDate: [null, Validators.required]
+    }, {validators: this.dateValidator});
+
+    this.sprintForm.get("startDate").setValue(sprint.start_date.toDate());
+    this.sprintForm.get("endDate").setValue(sprint.end_date.toDate());
   }
 
   private dateValidator: ValidatorFn = (group: FormGroup): ValidationErrors | null => {
@@ -55,13 +55,14 @@ export class EditSprintComponent implements OnInit {
 
   public async updateSprint() {
     const sprint = {
+      uid: this.currentSprint.uid,
       name: this.sprintForm.get('name').value,
       start_date: new Date(this.sprintForm.get('startDate').value),
-      active: false,
       end_date: new Date(this.sprintForm.get('endDate').value),
       created_at: new Date(),
-      user_stories: []
     };
+
+    console.log(sprint);
     await this.sprintService.updateSprint(this.projectID, sprint);
     await this.router.navigate(['project', { uid: this.projectID}] );
   }

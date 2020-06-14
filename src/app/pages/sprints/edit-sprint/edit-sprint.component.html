@@ -1,4 +1,4 @@
-<div class="align-form-center">
+<div *ngIf="sprintForm" class="align-form-center" fxFlex="40%">
   <form (ngSubmit)="updateSprint()" [formGroup]="sprintForm" novalidate>
     <mat-card class="login-card">
       <mat-card-header class="no-margin-card-header">
@@ -51,7 +51,7 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <button [disabled]="!sprintForm.valid" class="full-width" color="primary" mat-raised-button type="submit">Add sprint</button>
+        <button [disabled]="!sprintForm.valid" class="full-width" color="primary" mat-raised-button type="submit">Update Sprint</button>
       </mat-card-actions>
 
     </mat-card>
