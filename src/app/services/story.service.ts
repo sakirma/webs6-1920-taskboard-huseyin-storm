@@ -43,8 +43,8 @@ export class StoryService {
       .collection<Story>('stories', ref => ref.where('isAssigned', '==', false)).valueChanges();
   }
 
-  public createStory(projectID: string, story: Story){
-    return this.firestore.collection('projects').doc(projectID).collection('stories').add(story);
+  public async createStory(projectID: string, story: Story) {
+    return await this.db.set<Story>(`projects/${projectID}/stories/${this.firestore.createId()}`, story);
   }
 
   public updateSprint(projectID: string, story: Story){

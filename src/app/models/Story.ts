@@ -1,13 +1,30 @@
 import DocumentReference = firebase.firestore.DocumentReference;
 import * as firebase from 'firebase';
 
-export interface Story {
+export enum UserStoryStatus {
+  New = "New",
+  InProgress = "In Progress",
+  Done = "Done"
+}
+
+export class Story {
   id: string;
   name: string;
   description: string;
-  board_position: string;
+  board_position: UserStoryStatus;
+  status: string;
+  storyPoints: number;
+  owner: string;
+
   isAssigned: boolean;
   assigned_to_sprint: DocumentReference;
-  assigned_to_user: DocumentReference;
-  created_at: Date;
+
+  public constructor(name: string, description: string, boardPosition: UserStoryStatus, storyPoints: number, owner: string) {
+    this.name = name;
+    this.description = description;
+    this.board_position = boardPosition;
+    this.status = boardPosition;
+    this.storyPoints = storyPoints;
+    this.owner = owner;
+  }
 }
