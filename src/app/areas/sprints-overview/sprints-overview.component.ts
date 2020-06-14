@@ -25,9 +25,12 @@ export class SprintsOverviewComponent implements OnInit {
   public backlog: Story[] = [];
   public sprints: Sprint[] = [];
 
-  private projectID: string;
+  public projectID: string;
 
   public allDropLists = [ 'backLog' ];
+  public archivedColumnsToDisplay = ['name', 'unarchive'];
+
+  public archivedSprints: Sprint[] = [];
 
   constructor(private sprintService: SprintService, private storyService: StoryService,
               private route: ActivatedRoute, private router: Router, private auth: AuthService, private projectService: ProjectService) {
@@ -41,18 +44,29 @@ export class SprintsOverviewComponent implements OnInit {
 
       this.sprints$.subscribe( async sprints => {
         this.allDropLists.push(...sprints.map(sprint => sprint.uid));
-        this.sprints = sprints;
 
-        for (const sprint of this.sprints){
-          sprint.stories_ref = await this.storyService.getStoryDocs(sprint.user_stories, sprint.uid);
+        this.archivedSprints = [];
+        this.sprints = [];
+        for (const sprint of sprints){
+          if(sprint.active)
+          {
+            this.sprints.push(sprint);
+            sprint.stories_ref = await this.storyService.getStoryDocs(sprint.user_stories, sprint.uid);
+          }
+          else {
+            this.archivedSprints.push(sprint);
+          }
         }
       });
 
       this.backlog$.subscribe(stories => {
         this.backlog = stories.filter(story =>  !story.isAssigned);
       });
+
+
     });
   }
+
   ngOnInit(): void {
 
   }
@@ -101,6 +115,15 @@ export class SprintsOverviewComponent implements OnInit {
   }
 
   public async openSprintPage(uid: string) {
-    await this.router.navigate(['view-story', {pUid: this.projectID, sUid: uid}]);
+    await this.router.navigate(['view-sprint', {pUid: this.projectID, sUid: uid}]);
+  }
+
+  public async editStory(uid: string) {
+    await this.router.navigate(['edit-story', {pUid: this.projectID, stUid: uid}]);
+  }
+
+  public async toggleArchive(projectId: string, sprint: Sprint) {
+    sprint.active = true;
+    await this.sprintService.updateSprint(projectId, sprint);
   }
 }

@@ -1,0 +1,86 @@
+<div *ngIf="userStoryForm" class="align-form-center" fxFlex="40%">
+  <form (ngSubmit)="updateStory()" [formGroup]="userStoryForm" novalidate>
+    <mat-card class="login-card">
+      <mat-card-header class="no-margin-card-header">
+        <mat-card-title>Create a User Story</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <label>
+                <input formControlName="name" matInput placeholder="User story name">
+              </label>
+              <mat-error>
+                The user story name is <strong>required!</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <label>
+                <input formControlName="description" matInput placeholder="Description"
+                       type="text">
+              </label>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill" >
+              <mat-label>Status</mat-label>
+              <mat-select formControlName="status">
+                <mat-option *ngFor="let value of status" [value]="value">{{value}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <label>
+                <input formControlName="storyPoints" matInput placeholder="Points"
+                       type="number">
+              </label>
+              <mat-error>
+                the story points are <strong>required!</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label>Owner</mat-label>
+              <mat-select formControlName="owner">
+                <mat-option value="">No one yet</mat-option>
+                <div *ngIf="(project$ | async) as project">
+                  <div *ngFor="let member$ of project.members;">
+                    <mat-option *ngIf="(member$ | doc | async) as member" [value]="member.email">
+                      {{member.email}}
+                    </mat-option>
+                  </div>
+                </div>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button [disabled]="!userStoryForm.valid" class="full-width" color="primary" mat-raised-button type="submit">
+          Update Story
+        </button>
+      </mat-card-actions>
+
+    </mat-card>
+  </form>
+</div>

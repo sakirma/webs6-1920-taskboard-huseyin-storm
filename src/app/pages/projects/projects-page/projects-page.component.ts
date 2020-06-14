@@ -41,7 +41,6 @@ export class ProjectsPageComponent implements OnInit {
         this.projects = projects.filter(e => e.status === 'active');
       });
     });
-
   }
 
   ngOnInit(): void {

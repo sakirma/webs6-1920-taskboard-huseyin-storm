@@ -11,8 +11,6 @@ import {Sprint} from "../../../models/Sprint";
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 import DocumentReference = firebase.firestore.DocumentReference;
 import * as firebase from 'firebase';
-import {UserStoryStatus} from "../../../models/Story";
-import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-view-user-story',

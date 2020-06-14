@@ -41,6 +41,7 @@ import { ViewUserStoryComponent } from './pages/user_stories/view-user-story/vie
 import { UserStatusBoardComponent } from './areas/user-status-board/user-status-board.component';
 import {ChartsModule} from "ng2-charts";
 import { LineChartComponent } from './areas/line-chart/line-chart.component';
+import { EditStoriesComponent } from './pages/user_stories/edit-stories/edit-stories.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import { LineChartComponent } from './areas/line-chart/line-chart.component';
     ViewUserStoryComponent,
     UserStatusBoardComponent,
     LineChartComponent,
+    EditStoriesComponent,
   ],
     imports: [
         BrowserModule,

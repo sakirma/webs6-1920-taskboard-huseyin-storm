@@ -10,6 +10,7 @@ import {ProjectPageComponent} from './pages/projects/project-page/project-page.c
 import {CreateSprintComponent} from './pages/sprints/create-sprint/create-sprint.component';
 import {CreateUserStoryComponent} from "./pages/user_stories/create-user-story/create-user-story.component";
 import {ViewUserStoryComponent} from "./pages/user_stories/view-user-story/view-user-story.component";
+import {EditStoriesComponent} from "./pages/user_stories/edit-stories/edit-stories.component";
 
 const redirectLoggedInToProjects = () => redirectLoggedInTo(['projects']);
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
@@ -69,11 +70,17 @@ const routes: Routes = [
     data: {authGuardPipe: redirectUnauthorizedToLogin}
   },
   {
-    path: 'view-story',
+    path: 'view-sprint',
     component: ViewUserStoryComponent,
     canActivate: [AngularFireAuthGuard],
     data: {authGuardPipe: redirectUnauthorizedToLogin}
-  }
+  },
+  {
+    path: 'edit-story',
+    component: EditStoriesComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: {authGuardPipe: redirectUnauthorizedToLogin}
+  },
 ];
 
 @NgModule({
