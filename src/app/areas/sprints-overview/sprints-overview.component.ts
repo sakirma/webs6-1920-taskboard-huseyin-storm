@@ -20,11 +20,11 @@ export class SprintsOverviewComponent implements OnInit {
 
   public sprints$: Observable<Sprint[]>;
   private backlog$: Observable<Story[]>;
+  public project$: Observable<Project>;
 
   public backlog: Story[] = [];
   public sprints: Sprint[] = [];
 
-  public project$: Observable<Project>;
   private projectID: string;
 
   public allDropLists = [ 'backLog' ];
@@ -34,7 +34,6 @@ export class SprintsOverviewComponent implements OnInit {
 
     route.params.subscribe(async value => {
       this.projectID = value.uid;
-
       this.project$ = await projectService.getProject$(this.projectID);
 
       this.sprints$ = await sprintService.getSprints$(this.projectID);
@@ -63,28 +62,28 @@ export class SprintsOverviewComponent implements OnInit {
       moveItemInArray($event.container.data, $event.previousIndex, $event.currentIndex);
     } else {
 
+      transferArrayItem($event.previousContainer.data,
+        $event.container.data,
+        $event.previousIndex,
+        $event.currentIndex);
+
       if ($event.previousContainer.id !== 'backLog' && $event.container.id !== 'backLog') {
         await this.sprintService.changeSprintUserStory(
           this.projectID,
           $event.previousContainer.id,
           $event.container.id,
-          $event.previousContainer.data[$event.previousIndex].id);
-
-        transferArrayItem($event.previousContainer.data,
-          $event.container.data,
-          $event.previousIndex,
-          $event.currentIndex);
+          $event.container.data[$event.currentIndex].id);
 
       } else if ($event.previousContainer.id === 'backLog') {
-
         await this.sprintService.addUserStoryToSprint(this.projectID,
           $event.container.id,
-          $event.previousContainer.data[$event.previousIndex].id);
+          $event.container.data[$event.currentIndex].id);
+
       } else if ($event.container.id === 'backLog') {
 
         await this.sprintService.removeUserStoryFromSprint(this.projectID,
           $event.previousContainer.id,
-          $event.previousContainer.data[$event.previousIndex].id);
+          $event.container.data[$event.currentIndex].id);
       }
     }
   }

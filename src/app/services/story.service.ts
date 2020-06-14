@@ -21,7 +21,7 @@ export class StoryService {
     return this.db.colWithIds$(`projects/${projectID}/stories`);
   }
 
-  public async getStoryDocs(storyIDs: DocumentReference[], sprintID): Promise<Observable<Story[]>>{
+  public getStoryDocs(storyIDs: DocumentReference[], sprintID): Observable<Story[]>{
 
     if (storyIDs.length < 1) { return; }
     return this.firestore.collection<Story>(storyIDs[0].parent, ref => ref.where('assigned_sprint', '==', sprintID)
