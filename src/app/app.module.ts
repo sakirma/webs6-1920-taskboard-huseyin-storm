@@ -36,6 +36,7 @@ import { SprintsOverviewComponent } from './areas/sprints-overview/sprints-overv
 import {OverlayModule} from '@angular/cdk/overlay';
 import { CreateSprintComponent } from './pages/sprints/create-sprint/create-sprint.component';
 import { CreateUserStoryComponent } from './pages/user_stories/create-user-story/create-user-story.component';
+import { EditSprintComponent } from './pages/sprints/edit-sprint/edit-sprint.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { CreateUserStoryComponent } from './pages/user_stories/create-user-story
     SprintsOverviewComponent,
     CreateSprintComponent,
     CreateUserStoryComponent,
+    EditSprintComponent,
   ],
   imports: [
     BrowserModule,
