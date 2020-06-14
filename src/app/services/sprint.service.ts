@@ -70,7 +70,7 @@ export class SprintService {
     await this.firestore
       .collection('projects').doc(projectID)
       .collection('sprints')
-      .doc<any>(sprintID)
+      .doc(sprintID)
       .update({user_stories: FieldValue.arrayUnion(story.ref)});
 
   }
