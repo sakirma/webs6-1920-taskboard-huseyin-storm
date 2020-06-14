@@ -12,5 +12,5 @@ export interface Sprint {
   end_date: Timestamp;
   created_at: Timestamp;
   user_stories: DocumentReference[];
-  stories_ref: Story[];
+  stories_ref: Observable<Story[]>;
 }

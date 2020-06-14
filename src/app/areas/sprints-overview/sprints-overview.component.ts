@@ -7,9 +7,9 @@ import {Story} from '../../models/Story';
 import {StoryService} from '../../services/story.service';
 import {CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {DocumentReference} from '@angular/fire/firestore';
-import {AuthService} from "../../services/auth.service";
-import {ProjectService} from "../../services/project.service";
-import {Project} from "../../models/Project";
+import {AuthService} from '../../services/auth.service';
+import {ProjectService} from '../../services/project.service';
+import {Project} from '../../models/Project';
 
 @Component({
   selector: 'app-sprints-overview',
@@ -45,7 +45,7 @@ export class SprintsOverviewComponent implements OnInit {
         this.sprints = sprints;
 
         for (const sprint of this.sprints){
-          sprint.stories_ref = await this.storyService.getStoryDocs(sprint.user_stories);
+          sprint.stories_ref = await this.storyService.getStoryDocs(sprint.user_stories, sprint.uid);
         }
       });
 
@@ -59,20 +59,33 @@ export class SprintsOverviewComponent implements OnInit {
   }
 
   public async onStoriesDrop($event: CdkDragDrop<Story[], any>) {
-    console.log($event.previousContainer);
     if ($event.previousContainer === $event.container) {
       moveItemInArray($event.container.data, $event.previousIndex, $event.currentIndex);
     } else {
-      await this.sprintService.addUserStoryToSprint(this.projectID,
-        $event.container.id,
-        $event.previousContainer.data[$event.previousIndex].id);
 
-      transferArrayItem($event.previousContainer.data,
-        $event.container.data,
-        $event.previousIndex,
-        $event.currentIndex);
+      if ($event.previousContainer.id !== 'backLog' && $event.container.id !== 'backLog') {
+        await this.sprintService.changeSprintUserStory(
+          this.projectID,
+          $event.previousContainer.id,
+          $event.container.id,
+          $event.previousContainer.data[$event.previousIndex].id);
 
+        transferArrayItem($event.previousContainer.data,
+          $event.container.data,
+          $event.previousIndex,
+          $event.currentIndex);
 
+      } else if ($event.previousContainer.id === 'backLog') {
+
+        await this.sprintService.addUserStoryToSprint(this.projectID,
+          $event.container.id,
+          $event.previousContainer.data[$event.previousIndex].id);
+      } else if ($event.container.id === 'backLog') {
+
+        await this.sprintService.removeUserStoryFromSprint(this.projectID,
+          $event.previousContainer.id,
+          $event.previousContainer.data[$event.previousIndex].id);
+      }
     }
   }
 
@@ -84,7 +97,7 @@ export class SprintsOverviewComponent implements OnInit {
     await this.router.navigate(['create-user-story', {uid: this.projectID}]);
   }
 
-  public userIsOwner(project: Project) : boolean {
+  public userIsOwner(project: Project): boolean {
     return project.owner.id === this.auth.getUser.uid;
   }
 }

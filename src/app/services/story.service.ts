@@ -21,15 +21,21 @@ export class StoryService {
     return this.db.colWithIds$(`projects/${projectID}/stories`);
   }
 
-  public async getStoryDocs(storyIDs: DocumentReference[]): Promise<Story[]>{
-    const stories: Story[] = [];
+  public async getStoryDocs(storyIDs: DocumentReference[], sprintID): Promise<Observable<Story[]>>{
+
+    if (storyIDs.length < 1) { return; }
+    return this.firestore.collection<Story>(storyIDs[0].parent, ref => ref.where('assigned_sprint', '==', sprintID)
+    ).valueChanges({idField: 'id'});
+
+    /*const stories: Story[] = [];
     for (const storyID of storyIDs){
       this.db.doc$<Story>(storyID.path).subscribe(story => {
+        if (story === undefined) {return; }
         story.id = storyID.id;
         stories.push(story);
       });
     }
-    return stories;
+    return stories;*/
   }
 
   public getBackLogStories$(projectID: string): Observable<Story[]>{
