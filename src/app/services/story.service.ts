@@ -50,5 +50,9 @@ export class StoryService {
   public updateSprint(projectID: string, story: Story){
     return this.firestore.collection('projects').doc(projectID).collection('stories').doc(story.id).update(story);
   }
+
+  async getStory$(projectId: string, storyId: string) {
+      return this.db.doc$<Story>(`projects/${projectId}/stories/${storyId}`);
+  }
 }
 

@@ -100,4 +100,8 @@ export class SprintsOverviewComponent implements OnInit {
   public userIsOwner(project: Project): boolean {
     return project.owner.id === this.auth.getUser.uid;
   }
+
+  public async openSprintPage(uid: string) {
+    await this.router.navigate(['view-story', {pUid: this.projectID, sUid: uid}]);
+  }
 }
