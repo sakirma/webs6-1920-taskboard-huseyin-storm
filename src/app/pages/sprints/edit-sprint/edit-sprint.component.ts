@@ -12,9 +12,10 @@ import {Sprint} from '../../../models/Sprint';
 })
 export class EditSprintComponent implements OnInit {
   public sprintForm: FormGroup;
-  private projectID: string;
 
+  private projectID: string;
   private sprintID: string;
+
   private sprint$: Observable<Sprint>;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private sprintService: SprintService, private router: Router) {

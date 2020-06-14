@@ -55,4 +55,23 @@ describe('EditSprintComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have sprint name', () => {
+    expect(component.sprintForm.get('name').value).toBe('testSprint');
+  });
+
+  it('should give valid date', () => {
+    component.sprintForm.get('name').setValue('testName');
+    component.sprintForm.get('startDate').setValue(new Date(2020, 6, 13));
+    component.sprintForm.get('endDate').setValue(new Date(2020, 6, 14));
+    expect(component.sprintForm.valid).toBeTruthy();
+  });
+
+  it('should give invalid date', () => {
+    component.sprintForm.get('name').setValue('name');
+    component.sprintForm.get('startDate').setValue(new Date(2020, 6, 13));
+    component.sprintForm.get('endDate').setValue(new Date(2020, 6, 12));
+    expect(component.sprintForm.invalid).toBeTruthy();
+  });
+
 });

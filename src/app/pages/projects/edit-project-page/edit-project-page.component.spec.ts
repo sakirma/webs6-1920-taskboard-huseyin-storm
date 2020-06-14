@@ -57,7 +57,9 @@ describe('EditProjectPageComponent', () => {
     expect(component.projectForm.controls.name.value).toBe('test');
   });
 
-  it('should contain project description', () => {
-    expect(component.projectForm.controls.description.value).toBe('testDesc');
+  it('should have valid form', () => {
+    component.projectForm.get('name').setValue('Test');
+    component.projectForm.get('description').setValue('TestDescription');
+    expect(component.projectForm.valid).toBeTruthy();
   });
 });

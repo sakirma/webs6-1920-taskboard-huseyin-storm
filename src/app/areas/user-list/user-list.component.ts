@@ -1,12 +1,12 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Observable, Subscription} from "rxjs";
-import {Project} from "../../models/Project";
-import {Role, UserRole} from "../../models/Role";
-import {AuthService} from "../../services/auth.service";
-import {AddUserDialogComponent} from "../add-user-dialog/add-user-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
-import {DocumentReference} from "@angular/fire/firestore";
-import {ProjectService} from "../../services/project.service";
+import {Observable, Subscription} from 'rxjs';
+import {Project} from '../../models/Project';
+import {Role, UserRole} from '../../models/Role';
+import {AuthService} from '../../services/auth.service';
+import {AddUserDialogComponent} from '../add-user-dialog/add-user-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {DocumentReference} from '@angular/fire/firestore';
+import {ProjectService} from '../../services/project.service';
 
 @Component({
   selector: 'app-user-list',
@@ -17,7 +17,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   public columnsToDisplay = ['members', 'role'];
   email: string;
 
-  @Input() project$: Observable<Project>
+  @Input() project$: Observable<Project>;
   userIsOwner: boolean;
 
   public project: Project;
@@ -32,11 +32,11 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.project$.subscribe(project => {
       this.userIsOwner = project.owner.id === this.auth.getUser.uid;
       this.project = project;
-    })
+    });
   }
 
   ngOnDestroy(): void {
-    if(this.subscription)
+    if (this.subscription)
     {
       this.subscription.unsubscribe();
     }
